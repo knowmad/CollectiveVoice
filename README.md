@@ -7,8 +7,8 @@ Collective Voice helps companies generate online reviews.
 The growth of the web has empowered customers to have greater power than ever.
 Buyers often turn to customer testimonials and reviews to determine whether or
 not they trust a product, service, and even a seller. In fact, surveys show that
-buyers read L<seven reviews on
-average|https://www.brightlocal.com/research/local-consumer-review-survey/#Q17>
+buyers read [seven reviews on
+average](https://www.brightlocal.com/research/local-consumer-review-survey/#Q17)
 before deciding to trust a business.
 
 But, getting reviews can be challenging. How do you make it easy for happy
@@ -162,4 +162,4 @@ Links to more information about Tailwind and AlpineJS:
 
 ## Enjoy
 
-Happy hacking!
+Happy hacking! -WM
