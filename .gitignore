@@ -1,0 +1,10 @@
+sessions/
+logs/
+local/
+.carton
+.perl-version
+node_modules/
+run/
+environments/shell-env-local
+environments/shell-env-local-*
+.DS_Store

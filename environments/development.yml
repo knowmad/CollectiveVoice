@@ -1,0 +1,34 @@
+##
+## Development configuration
+##
+
+# Logging
+logger: log4perl
+log: "core"
+engines:
+    logger:
+        log4perl:
+             config_file: environments/log4perl.conf
+
+# Dancer2 options
+warnings: 1
+startup_info: 1
+
+# should Dancer2 show a stacktrace when an 5xx error is caught?
+# if set to yes, public/500.html will be ignored and either
+# views/500.tt, 'error_template' template, or a default error template will be used.
+show_errors: 1
+
+# Enable the debugger when we are in development mode
+plugins:
+    Debugger:
+        enabled: 1
+
+# Sessions
+session: YAML
+engines:
+    session:
+        YAML:
+            cookie_name: cv-dev.session
+            #is_secure: 1
+            #is_http_only: 1

@@ -1,0 +1,35 @@
+##
+## Production configuration
+##
+
+# Logging
+logger: log4perl
+log: "warning"
+engines:
+    logger:
+        log4perl:
+             config_file: environments/log4perl.conf
+
+# don't consider warnings critical
+warnings: 0
+
+# hide errors
+show_errors: 0
+
+# disable server tokens in production environments
+no_server_tokens: 1
+
+# Don't show startup info
+startup_info: 0
+
+# Sessions
+session: "Cookie"
+engines:
+    session:
+        Cookie:
+            secret_key: 'All your Base are belong to us'
+            default_duration:     604800
+            with_request_address: 0
+            cookie_name: collective-voice.session
+            is_secure: 1
+            is_http_only: 1

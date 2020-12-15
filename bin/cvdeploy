@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# This requires SSH access to the deployment server, and the user you are SSHing as needs
+# +rwx permissions for the target directory.
+#
+# 1. On macOS, make sure to install rsync from homebrew.
+# 2. You can pass-thru options such as '-n' for a dry-run
+
+. environments/shell-env
+if [ -e environments/shell-env-local ]; then
+    . environments/shell-env-local
+fi
+
+# Rsync options:
+# -r: recursive
+# -v: verbose
+# -z: compress
+# --update: - updates remote files with newer local copies
+# -e: use external command to connect via ssh
+# --exclude: multiple excludes to remove localized directories and files
+
+rsync -rvz --update -e "ssh -p $CV_DEPLOY_PORT" \
+ --exclude 'local' --exclude 'sessions' --exclude '.git' \
+ --exclude 'logs' --exclude 't' --exclude 'run' \
+ --exclude '*-local*' --exclude '*.example' --exclude "*~"\
+ $@ \
+ --delete $CV_ROOT $CV_DEPLOY_USER@$CV_DEPLOY_HOST:$CV_DEPLOY_DIR

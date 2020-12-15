@@ -1,0 +1,81 @@
+<!-- ModalForm -->
+<div x-show="showModalForm" x-cloak>
+  <div x-show.transition="showModalForm" class="fixed z-20 top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-25 flex items-center justify-center" role="dialog" aria-modal="true">
+
+    <div @mousedown.away="showModalForm = false" @keydown.window.escape="showModalForm = false" class="w-full max-w-screen-sm bg-white rounded shadow-xl flex flex-col absolute divide-y divide-gray-200">
+
+      <div class="px-5 py-4 flex items-center justify-between">
+        <h2 class="text-xl leading-tight text-gray-700">
+          Leave Us Feedback
+        </h2>
+
+        <button class="text-gray-400 hover:text-gray-600" @click.prevent="showModalForm = false">
+          <svg class="w-4 fill-current transition duration-150" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001">
+            <path
+              d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285a19.938 19.938 0 0014.143 5.857 19.94 19.94 0 0014.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z" />
+            </svg>
+        </button>
+      </div>
+
+      <div class="p-5">
+        <div id="feedback_form" class="text-sm text-gray-600 text-left">
+            <div id="err_no_email_send" class="errline"></div>
+            <p class="mt-1 text-sm leading-5 text-gray-500">
+                We seem to have fell short of expectations. Can you please take a few minutes
+                to tell us what went wrong so that we can do a better job next time?
+            </p>
+            <div class="sm:col-span-4 pt-4">
+                <label for="full_name" class="block text-sm font-medium leading-5 text-gray-700">
+                    Name
+                </label><span id="err_name" class="errline"></span>
+                <div class="mt-1 rounded-md shadow-sm">
+                    <input id="full_name" type="text" name="full_name" placeholder="First and last name" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                </div>
+            </div>
+            <div class="sm:col-span-4 pt-3">
+                <label for="email_address" class="block text-sm font-medium leading-5 text-gray-700">
+                    Email Address
+                </label><span id="err_email" class="errline"></span>
+                <div class="mt-1 rounded-md shadow-sm">
+                    <input id="email_address" type="email" name="email_address" placeholder="ex. you@your-provider.com" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                </div>
+            </div>
+            <div class="sm:col-span-2 pt-3">
+                <label for="phone_number" class="block text-sm font-medium leading-5 text-gray-700">
+                    Phone Number
+                </label><span id="err_phone" class="errline"></span>
+                <div class="mt-1 rounded-md shadow-sm">
+                    <input id="phone_number" name="phone_number" type="text" placeholder="ex. (888) 555-1212" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                </div>
+            </div>
+            <div class="sm:col-span-6 pt-3">
+                <label for="feedback" class="block text-sm font-medium leading-5 text-gray-700">
+                    Feedback
+                </label><span id="err_feedback" class="errline"></span>
+                <div class="mt-1 rounded-md shadow-sm">
+                    <textarea id="feedback" name="feedback" rows="3" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                </div>
+                <p class="mt-2 text-sm text-gray-500">Describe what went wrong and how we can improve next time.</p>
+            </div>
+
+            <label class="visuallyhidden">Don't fill this in!<input type="text" name="go" tabindex="-1"></label>
+            <input type="hidden" name="away">
+
+        </div>
+      </div>
+
+      <div id="formButtons" class="flex items-center justify-end px-5 py-4 space-x-2">
+        <button @click.prevent="showModalForm = false"
+          class="rounded px-5 py-2 rounded-sm border border-gray-300 text-gray-600 font-semibold transition duration-150 hover:border-gray-400 hover:text-gray-900 focus:outline-none focus:shadow-outline">Cancel</button>
+
+          <!-- TODO: Disable submit button until required fields are filled in -->
+          <!-- TODO: Change message and disable submit button when form is submitted -->
+        <button @click.prevent="submitForm($refs)" type="submit" class="rounded px-5 py-2 rounded-sm bg-indigo-600 text-white font-semibold transition duration-150 hover:bg-indigo-500 focus:outline-none focus:shadow-outline" id="send_feedback">Send Feedback</button>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>

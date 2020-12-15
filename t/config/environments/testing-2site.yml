@@ -1,0 +1,11 @@
+company_name: "2 - Acme Widgets, Inc."
+
+review_sites:
+    -
+        site: Google
+        url: xxx
+        logo: /images/logos/google.jpg
+    -
+        site: Facebook
+        url: xxx
+        logo: /images/logos/facebook.png

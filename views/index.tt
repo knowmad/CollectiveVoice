@@ -1,0 +1,96 @@
+[% WRAPPER components/section.tt title = "Home" %]
+<div class="text-center pb-4">
+  <img class="mx-auto" src="[% company_logo %]" alt="[% company_name %] Logo">
+  <h1>[% company_name %]</h1>
+</div>
+
+<form id="review_feedback" method="post" action="/feedback">
+  <div x-data="component()" class="text-center">
+
+    <template x-for="star in ratings" class="flex items-center justify-center space-x-1">
+
+      <button @click.prevent="rating = star;
+      ratingText = ratingDesc[rating];
+      if (rating > 3) { showModalReview = true;  showModalForm = false; }
+      else            { showModalReview = false; showModalForm = true;  }"
+      @mouseover="hoverRating = star; ratingText = ratingDesc[hoverRating];"
+      @mouseleave="hoverRating = rating; ratingText = ratingDesc[rating];"
+      aria-hidden="true" class="rounded-sm focus:outline-none focus:shadow-outline p-1">
+        <svg :class="{ 'text-yellow-300' : hoverRating >= star, 'text-gray-600' : rating >= star }" class="w-32 pt-6 text-gray-400 fill-current transition duration-150 cursor-pointer" viewBox="0 -10 511.991 511" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M510.652 185.883a27.177 27.177 0 00-23.402-18.688l-147.797-13.418-58.41-136.75C276.73 6.98 266.918.497 255.996.497s-20.738 6.483-25.023 16.53l-58.41 136.75-147.82 13.418c-10.837 1-20.013 8.34-23.403 18.688a27.25 27.25 0 007.937 28.926L121 312.773 88.059 457.86c-2.41 10.668 1.73 21.7 10.582 28.098a27.087 27.087 0 0015.957 5.184 27.14 27.14 0 0013.953-3.86l127.445-76.203 127.422 76.203a27.197 27.197 0 0029.934-1.324c8.851-6.398 12.992-17.43 10.582-28.098l-32.942-145.086 111.723-97.964a27.246 27.246 0 007.937-28.926zM258.45 409.605" />
+          </svg>
+      </button>
+
+    </template>
+
+    <div class="block pt-4 text-center">
+      <input type="hidden" name="rating" id="rating" x-model="rating">
+      <input type="text" class="focus:outline-none text-center" name="rating_text" id="rating_text" x-model.debounce="ratingText" readonly>
+    </div>
+    <div class="hidden">
+      <label for="rating">Your star rating</label>
+      <input type="number" name="rating" x-model="rating" readonly>
+    </div>
+
+    [% PROCESS components/feedback_form.tt %]
+    [% PROCESS components/review_sites.tt %]
+</form>
+
+[% END %]
+<script type="text/javascript">
+
+// Alpine.js init handler
+function component () {
+	return {
+      rating: 0,
+      hoverRating: 0,
+      ratings: [ 1, 2, 3, 4, 5],
+      ratingDesc: {
+          [%- FOREACH rating IN ratings.keys.sort %]
+          [% rating %]: '[% ratings.$rating %]',
+          [%- END %]
+      },
+      ratingText: '',
+      showModalForm: false,
+      showModalReview: false,
+
+      // handle submissions from the feedback form
+      submitForm() {
+        // Submit to /feedback then redirect to /thanks
+        const XHR = new XMLHttpRequest();
+
+        // Bind the FormData object and the form element
+        const FD = new FormData( document.getElementById( "review_feedback" ) );
+
+        // Define what happens on successful data submission
+        XHR.addEventListener( "load", function(event) {
+          if (XHR.status != 200) { // analyze HTTP status of the response
+            const data = event.target.responseText;
+            if (JSON.parse(data).no_email_send) {
+                // TODO: replace the email address with a dynamic value from config file
+                alert(`Failed to send an email. Please contact webmaster@knowmad.com.\n\n(Error code = ${XHR.status})`); // e.g. 404: Not Found
+            }
+            else {
+              alert(`Missing form data.\n\n(Response = ${data})\n(Error code = ${XHR.status})`); // e.g. 404: Not Found
+            }
+          } else { // show the result
+            //alert(`Done, got ${XHR.response.length} bytes`); // response is the server
+            window.location = '/thanks';
+          }
+        } );
+
+        // Define what happens in case of error
+        XHR.addEventListener( "error", function( event ) {
+          alert( 'Oops! Something went wrong. Check your connection and try again.' );
+        } );
+
+        // Set up our request
+        XHR.open( "POST", "/feedback" );
+
+        // The data sent is what the user provided in the form
+        XHR.send( FD );
+      }
+    }
+}
+</script>

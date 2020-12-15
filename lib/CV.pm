@@ -1,0 +1,172 @@
+package CV;
+
+use CV::Base qw( WebApp );
+use Dancer2::Plugin::Debugger;
+use Try::Tiny;
+use Email::Valid;
+use Number::Phone;
+
+# Semantic versioning FTW
+our $VERSION = '1.0.0';
+
+# Layout MUST be set no later than the before hook!
+hook 'before' => sub {
+    my $ajax = request_header 'X-Requested-With';
+    if( defined $ajax and $ajax eq 'XMLHttpRequest' ) {
+        set layout => undef;
+        var ajax => 1;
+    } else {
+        set layout => 'main';
+        var ajax => 0;
+    }
+};
+hook on_route_exception => sub {
+    my ($app, $error) = @_;
+    if ( ($error =~ /undefined value/) && !exists(config->{ review_sites }) ) {
+      error ("ERROR: Have you defined review_sites in your config file and given the path to DANCER_CONFDIR? [", $error, ']')
+    }
+    else {
+      error("Oops: ", $error);
+    }
+};
+
+get '/'  => sub {
+    my @sites    = config->{ review_sites }->@*;
+    my $top_site = shift @sites;
+    render( 'index', {
+        'title'            => 'Collective Voice',
+        'company_name'     => config->{'company_name'},
+        'company_logo'     => config->{'company_logo'},
+        'page_title'       => 'Leave a Review',
+        'page_description' => 'Help us. Help others. This is your invitation to review.',
+        'ratings'          => config->{ ratings },
+        'top_review_site'  => $top_site,
+        'review_sites'     => \@sites,
+        'logos'            => config->{ logos },
+    });
+};
+
+post '/feedback' => sub {
+    # Trap the bots in an accessible way
+    my $spam_1 = body_parameters->get( 'go' );
+    my $spam_2 = body_parameters->get( 'away' );
+
+    redirect 'https://en.wikipedia.org/wiki/Three_Laws_of_Robotics'
+        if $spam_1 || $spam_2;
+
+    # Ok, we seem to be a real human, so generate some feedback
+    my %errors;
+
+    my $name = body_parameters->get( 'full_name' );
+    $errors{ no_name } = 'Please enter your full name.' unless $name;
+
+    my $email_address = body_parameters->get( 'email_address' );
+    if( defined $email_address and $email_address ne '' ) {
+        $errors{ bad_email } = 'Please enter a valid email address (i.e., foo@bar.com).'
+            unless Email::Valid->address( $email_address );
+    } else {
+        $errors{ no_email } = 'Please enter your email address.';
+    }
+
+    my $phone_number = body_parameters->get( 'phone_number' );
+    my $phone;
+    if( $phone_number ) {
+        $phone = Number::Phone->new( 'US', $phone_number );
+        if( !defined $phone or not $phone->is_valid ) {
+            $errors{ bad_phone } = 'Please enter a valid phone number.';
+        }
+    }
+
+    my $feedback = body_parameters->get( 'feedback' );
+    $errors{ no_feedback } = 'Please provide some feedback.' unless $feedback;
+
+    if( %errors ) {
+        status 400;
+        send_as JSON => \%errors;
+    } else {
+        my $result;
+        try {
+            my $sg  = Email::SendGrid::V3->new( api_key => config->{ sendgrid }{ api_key } );
+            $result =
+                $sg->from( config->{ sendgrid }{ from } )
+                   ->subject( "[CollectiveVoice] You've received new feedback!" )
+                   ->add_content( 'text/plain',
+                        template 'email_feedback', {
+                            full_name     => $name,
+                            email_address => $email_address,
+                            phone_number  => $phone,
+                            feedback      => $feedback,
+                        },
+                    )
+                   ->add_envelope( to => \@{ config->{ contact_email } } )
+                   ->send;
+
+            die $result->{ reason } unless $result->{ success };
+        } catch {
+            error "Couldn't send feedback email: $_";
+            status 400;
+            $errors{ no_email_send } = 1;
+            send_as JSON => \%errors;
+        };
+        # $result->{ success };
+        session 'feedback_given' => 1;
+    }
+};
+
+#
+# I was going to make this a modal, but I am leaving this as a full page render for
+# now. It makes for a slightly different workflow from the software we are emulating,
+# and I think it helps ensure that we can't easily double-submit the same form. This
+# just seems really clean.
+#
+# We can make this a modal again easily enough.
+#
+get '/thanks' => sub {
+    # TODO (later): disable reviews once feedback form is submitted.
+    if( session->read( 'feedback_given' ) ){
+        app->destroy_session;
+        render( 'thanks', {
+            title        => 'Collective Voice',
+            company_name => config->{ company_name },
+            company_url  => config->{ company_url },
+        });
+    } else {
+        redirect '/';
+    }
+};
+
+# Conditionally minify page
+hook after_layout_render => sub( $ref_content ) {
+    if( $ENV{ DANCER_ENVIRONMENT } && $ENV{ DANCER_ENVIRONMENT } eq 'production' ) {
+        my $content = ${ $ref_content };
+        $content = minify( html => $content, {
+            remove_comments     => 1,
+            remove_newlines     => 1,
+            no_compress_comment => 1,
+            html5               => 1,
+            do_javascript       => 'best',
+            do_stylesheet       => 'minify'
+        });
+        ${ $ref_content } = $content;
+    }
+};
+
+# Send an AJAX-y (or non-AJAX-y) response
+sub render( $template, $args ) {
+    croak "render(): No template specified!" unless $template;
+
+    my $ajax = var 'ajax' // 0;
+    my $html = template( $template, $args );
+
+    if( $ajax ) {
+        send_as 'JSON' => {
+            content          => $html,
+            page_title       => $args->{ page_title },
+            page_description => $args->{ page_description },
+        };
+    } else {
+        return $html;
+    }
+}
+
+true;

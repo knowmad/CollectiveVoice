@@ -1,0 +1,26 @@
+# Dancer settings
+appname: "CollectiveVoice"
+layout: "main"
+charset: "UTF-8"
+
+template: "template_toolkit"
+
+engines:
+    template:
+        template_toolkit:
+            start_tag: '[%'
+            end_tag:   '%]'
+
+# Global app settings
+powered_by: "Collective Voice"
+ratings:
+    1: Bad
+    2: Expected Better
+    3: Okay
+    4: Good
+    5: Excellent!
+
+logos:
+    google: images/logos/google.png
+    facebook: images/logos/facebook.png
+    yelp: images/logos/yelp.png

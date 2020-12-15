@@ -1,0 +1,11 @@
+You've received the following feedback on [% company_name | html_entity %] through Collective Voice:
+
+* Sender's Name: [% full_name | html_entity %]
+* Email Address: [% email_address | html_entity %]
+* Phone Number:  [% phone_number | html_entity %]
+* Feedback Given: 
+    "[% feedback | html_entity %]"
+
+Thank you,
+-- Collective Voice
+

@@ -1,0 +1,57 @@
+#!/bin/bash
+
+. environments/shell-env
+if [ -e environments/shell-env-local ]; then
+    . environments/shell-env-local
+fi
+
+# The start option will daemonize the server; startd is intended for use by
+# systemd scripts to keep the app in foreground
+usage='Usage: cvlauncher start|systemd|stop|restart|console|debug'
+
+if [ $# -lt 1 ]; then
+    echo "$usage"
+else
+    # Make sure run, logs exist
+    if [ ! -d $CV_ROOT/logs ]; then
+        mkdir $CV_ROOT/logs
+    fi
+
+    if [ ! -d $CV_ROOT/run ]; then
+        mkdir $CV_ROOT/run
+    fi
+
+    if [ $1 = 'start' ]; then
+        start_server \
+            --dir=$CV_ROOT \
+            --port=$SS_PORT \
+            --log-file=$SS_LOG_FILE \
+            --pid-file=$SS_PID_FILE \
+            --daemonize \
+            --status-file=$SS_STATUS_FILE \
+            -- plackup -s Starlet --user $SS_USER --group $SS_GROUP -E $DANCER_ENVIRONMENT --workers=$SS_WORKERS bin/app.psgi
+        echo "started server at http://localhost:$SS_PORT"
+    elif [ $1 = 'systemd' ]; then
+        start_server \
+            --dir=$CV_ROOT \
+            --path=$SS_SOCK_FILE \
+            --log-file=$SS_LOG_FILE \
+            --pid-file=$SS_PID_FILE \
+            --status-file=$SS_STATUS_FILE \
+            -- plackup -s Starlet --user $SS_USER --group $SS_GROUP -E $DANCER_ENVIRONMENT --workers=$SS_WORKERS bin/app.psgi
+        echo "started server at http://localhost:$SS_PORT"
+    elif [ $1 = 'stop' ]; then
+        start_server --stop --pid-file=$SS_PID_FILE
+    elif [ $1 = 'restart' ]; then
+        start_server --restart --pid-file=$SS_PID_FILE --status-file=$SS_STATUS_FILE
+    elif [ $1 = 'console' ]; then
+        echo "starting server at http://localhost:$SS_PORT"
+        DANCER_ENVIRONMENT=debug plackup -s Starlet -E debug -p $SS_PORT bin/app.psgi
+    elif [ $1 = 'debug' ]; then
+        echo "starting server at http://localhost:$SS_PORT"
+        DANCER_ENVIRONMENT=debug plackup -r -R lib -R bin -R . -p $SS_PORT bin/app.psgi
+    else
+        echo "$usage"
+        exit
+    fi
+fi

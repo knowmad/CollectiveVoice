@@ -1,0 +1,15 @@
+[Unit]
+Description=Collective Voice
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=dancer
+WorkingDirectory=/home/dancer/cv
+ExecStart=/home/dancer/cv/bin/cvlauncher systemd
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
