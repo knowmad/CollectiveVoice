@@ -1,7 +1,6 @@
 [% WRAPPER components/section.tt title = "Home" %]
 <div class="text-center pb-4">
-  <img class="mx-auto" src="[% company_logo %]" alt="[% company_name %] Logo">
-  <h1>[% company_name %]</h1>
+  <img class="mx-auto" src="[% company_logo %]" alt="[% company_name %] Logo" title="[% company_name %]">
 </div>
 
 <form id="review_feedback" method="post" action="/feedback">
