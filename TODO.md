@@ -1,29 +1,16 @@
 # The Almighty TODO List
 
-This file contains ideas for future functionality. For open issues and tasks
-under development, see the [CV-1.0 Development Project] (link to follow) in
-GitHub.
+This file contains ideas for future functionality, testing & deployment.
 
-## Before v1.0.0 release
+For open issues and tasks under development, see the [CV-1 Development Project](https://github.com/knowmad/CollectiveVoice/projects/1) in GitHub.
 
-* Cleanup unused images, CSS, JS (Jason)
+
+## New Feature Ideas
+
 * Add `/heath` path to CV.pm
-
-## Immediately after push to github
-
-* Add a "CV-1.0 Development" project and paste the link to this file (first
-paragraph above).
-* Add an issue -- Add support for Google Analytics tracking code (add to config_local.yml, load in CV.pm and include into index.tt)
-* Add issues from cromedome project <https://github.com/cromedome/CollectiveVoice/projects/1>
-  * Disable reviews once a feedback form has been submitted (idea being that we don't want user to be able to rate us publicly if they've provided feedback)
-
-
-========
-
-## New Features
-
 * Make a11y-friendly
 * Add support for Audio and Video testimonials
+* Disable reviews once a feedback form has been submitted (idea being that we don't want user to be able to rate us publicly if they've provided feedback)
 
 
 ## Testing
