@@ -20,6 +20,7 @@ my $mech = Test::WWW::Mechanize::PSGI->new( app => $app );
 
 $mech->get_ok('/');
 $mech->content_contains("feedback", "Loaded the feedback form");
+$mech->content_contains("Leave a Review", "page_title was loaded from config file");
 
 
 done_testing();

@@ -6,6 +6,8 @@ company_logo: "images/Acme-corp.png"
 
 # For tailwind UI, consider making bg 400 grey and fg 800 blue
 brand_color: "#cccccc"
+page_title: "Leave a Review"
+page_description: "Help us. Help others. This is your invitation to review."
 
 review_sites:
     -
