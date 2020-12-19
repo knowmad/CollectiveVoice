@@ -34,7 +34,7 @@ get '/'  => sub {
     my @sites    = config->{ review_sites }->@*;
     my $top_site = shift @sites;
     render( 'index', {
-        'title'            => 'Collective Voice',
+        'meta_title'       => config->{'meta_title'},
         'company_name'     => config->{'company_name'},
         'company_logo'     => config->{'company_logo'},
         'page_title'       => config->{'page_title'},
