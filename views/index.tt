@@ -13,7 +13,7 @@
       if (rating > 3) { showModalReview = true;  showModalForm = false; }
       else            { showModalReview = false; showModalForm = true;  }"
       @mouseover="hoverRating = star; ratingText = ratingDesc[hoverRating];"
-      @mouseleave="hoverRating = rating; ratingText = ratingDesc[rating];"
+      @mouseleave="hoverRating = rating; ratingText = ratingDesc[rating] || '';"
       aria-hidden="true" class="rounded-sm focus:outline-none focus:shadow-outline p-1">
         <svg :class="{ 'text-yellow-300' : hoverRating >= star, 'text-gray-600' : rating >= star }" class="w-32 pt-6 text-gray-400 fill-current transition duration-150 cursor-pointer" viewBox="0 -10 511.991 511" xmlns="http://www.w3.org/2000/svg">
           <path
