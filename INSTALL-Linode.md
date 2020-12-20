@@ -54,7 +54,7 @@ OS: Debian 10
 
 ## Step 5: Setup code and launch app
 1. Logon to server and cd to the upload directory
-2.  Run `carton install` (or whatever tool you prefer to load the module requirements)
+2.  Run `carton install --deployment` (or whatever tool you prefer to load the module requirements)
 3. 1. Create a server version of `shell-env-local`
       1. Set $CV_ROOT value
       2. set the environment to "production"
