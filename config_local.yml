@@ -6,7 +6,7 @@ company_logo: "images/Acme-corp.png"
 
 # For tailwind UI, consider making bg 400 grey and fg 800 blue
 meta_title: "Acme Widgets, Inc. | Leave a Review"
-brand_color: "#cccccc"
+brand_color: "#fa0000"
 page_title: "Leave a Review"
 page_description: "Help us. Help others. This is your invitation to review."
 

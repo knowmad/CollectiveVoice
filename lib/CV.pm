@@ -123,12 +123,13 @@ post '/feedback' => sub {
 #
 get '/thanks' => sub {
     # TODO (later): disable reviews once feedback form is submitted.
-    if( session->read( 'feedback_given' ) ){
+    if( session->read( 'feedback_given' ) || params->{'test'} ){
         app->destroy_session;
         render( 'thanks', {
             title        => 'Collective Voice',
             company_name => config->{ company_name },
             company_url  => config->{ company_url },
+            brand_color  => config->{ brand_color },
         });
     } else {
         redirect '/';
