@@ -96,7 +96,7 @@ post '/feedback' => sub {
                             email_address => $email_address,
                             phone_number  => $phone,
                             feedback      => $feedback,
-                        },
+                        },{ layout => undef }
                     )
                    ->add_envelope( to => \@{ config->{ contact_email } } )
                    ->send;
