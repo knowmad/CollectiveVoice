@@ -64,9 +64,10 @@ OS: Debian 10
 ## Step 6: Add Nginx with reverse proxy to Dancer
 (see also https://www.linode.com/docs/web-servers/nginx/nginx-installation-and-basic-setup/)
 1. `sudo apt-get install nginx`
-2. Create an nginx config file (for Ubuntu, add this file to `/etc/nginx/sites-enabled`)
-3. Reload the nginx configuration (for Ubuntu, `sudo service nginx reload`)
-4. There are lots of resources online for configuring SSL, etc.
+2. Create an nginx config file (an example can be found in `environments/nginx.conf.example`)
+3. On Ubuntu, add this file to the `/etc/nginx/sites-enabled` directory
+4. Reload the nginx configuration (for Ubuntu, `sudo service nginx reload`)
+5. There are lots of resources online for configuring SSL, etc.
 
 
 ## Step 7: Setup SSL certificate
