@@ -64,21 +64,16 @@ OS: Debian 10
 ## Step 6: Add Nginx with reverse proxy to Dancer
 (see also https://www.linode.com/docs/web-servers/nginx/nginx-installation-and-basic-setup/)
 1. `sudo apt-get install nginx`
-2. Create an nginx config file (an example can be found in `environments/nginx.conf.example`)
-3. On Ubuntu, add this file to the `/etc/nginx/sites-enabled` directory
-4. Reload the nginx configuration (for Ubuntu, `sudo service nginx reload`)
-5. There are lots of resources online for configuring SSL, etc.
+2. Create an nginx config file (for Ubuntu, add this file to `/etc/nginx/sites-enabled`)
+3. Reload the nginx configuration (for Ubuntu, `sudo service nginx reload`)
+4. There are lots of resources online for configuring SSL, etc.
 
 
 ## Step 7: Setup SSL certificate
-(see also https://www.linode.com/docs/quick-answers/websites/certbot/)
+(see also https://www.linode.com/docs/guides/how-to-install-certbot-on-ubuntu-18-04/)
 1. Install certbot — `sudo apt install certbot python-certbot-nginx`
 2. Get a certificate — `sudo certbot --nginx`
-3. Configure ufw for https access
-    1. sudo systemctl start ufw && sudo systemctl enable ufw
-    2. sudo ufw allow http
-    3. sudo ufw allow https
-    4. sudo ufw enable
+3. Certbot will store all generated keys and issued certificates in the `/etc/letsencrypt/live/$domain` directory
 
 
 ## Step 8: Secure the server with ufw firewall
@@ -88,7 +83,13 @@ OS: Debian 10
       1. `sudo ufw default allow outgoing`
       2. `sudo ufw default deny incoming`
 3. Allow ssh — e.g., `sudo ufw allow 3122`
-4. Check rules & status — `sudo ufw status`
+4. Configure ufw for https access
+      1. `sudo systemctl start ufw && sudo systemctl enable ufw`
+      2. `sudo ufw allow http`
+      3. `sudo ufw allow https`
+      4. `sudo ufw enable`
+5. Check rules & status — `sudo ufw status`
+
 
 ## Step 9: Configure the app to start on reboot (systemd)
 (see https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/)
