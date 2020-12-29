@@ -23,7 +23,8 @@ hook 'before' => sub {
 hook on_route_exception => sub {
     my ($app, $error) = @_;
     if ( ($error =~ /undefined value/) && !exists(config->{ review_sites }) ) {
-      error ("ERROR: Have you defined review_sites in your config file and given the path to DANCER_CONFDIR? [", $error, ']')
+      my $confdir = $ENV{DANCER_CONFDIR} || '';
+      error ("ERROR: Have you defined review_sites in your config file and given the path to DANCER_CONFDIR ($confdir)? [", $error, ']')
     }
     else {
       error("Oops: ", $error);
@@ -103,8 +104,10 @@ post '/feedback' => sub {
 
             die $result->{ reason } unless $result->{ success };
         } catch {
-            error "Couldn't send feedback email: $_";
+            my $error_msg = "Couldn't send feedback email: $_";
+            error $error_msg;
             status 400;
+            $errors{ err_message } = $_;
             $errors{ no_email_send } = 1;
             send_as JSON => \%errors;
         };
@@ -129,9 +132,12 @@ get '/thanks' => sub {
             title        => 'Collective Voice',
             company_name => config->{ company_name },
             company_url  => config->{ company_url },
+            company_logo => config->{ company_logo },
             brand_color  => config->{ brand_color },
         });
     } else {
+        my $fb = session->read( 'feedback_given') || '';
+        error ("User is trying to access the /thanks page with improper credentials. Are sessions setup accurately? (feedback_given = $fb)");
         redirect '/';
     }
 };
