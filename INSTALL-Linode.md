@@ -1,5 +1,5 @@
 # Collective Voice - Dancer + Linode Deployment: A Comprehensive Guide
-Updated: August 15, 2020
+Updated: December 28, 2020
 OS: Debian 10
 
 
