@@ -21,6 +21,10 @@ else
         mkdir $CV_ROOT/run
     fi
 
+    if [ ! -d $CV_ROOT/sessions ]; then
+        mkdir $CV_ROOT/sessions
+    fi
+
     if [ $1 = 'start' ]; then
         start_server \
             --dir=$CV_ROOT \
