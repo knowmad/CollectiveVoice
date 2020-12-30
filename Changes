@@ -1,1 +1,14 @@
-2020-12-14: v1.0.0 inital public release
+Revision history for Perl module Foo::Bar
+
+1.0.0 2020-12-14
+
+  * Inital public release
+
+1.0.1 2020-12-29
+
+  * Add better logging
+  * Redirect to /thanks after a review site is clicked
+  * Fix the format of the Changes file
+  * Update the installation guide for Linode+Debian (INSTALL-Linode.md)
+  * Add more exclusions to `bin/cvdeploy`
+  * Add back `public/css/error.css`
