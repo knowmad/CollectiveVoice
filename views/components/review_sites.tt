@@ -51,7 +51,7 @@ cols) | format('%.02f') %] [% ELSE %] [% SET colwidth = 100 %] [% END %]
                 <div id="review_site_[% loop.count  %]" class="w-1/[% loop.size %] text-gray-700 text-center bg-white py-2 px-6">
                   <!-- Review site #[% loop.count %] - [% review_site.site %] -->
                   [% lcsite = review_site.site.lower %]
-                  <a href="[% review_site.url %]" target="_blank">
+                  <a @click.debounce.250ms="submitReview" href="[% review_site.url %]" target="_blank">
                     <img src="[% review_site.logo || logos.$lcsite %]" alt="[% review_site.site %] logo" class="mx-auto">
                   </a>
                 </div>
