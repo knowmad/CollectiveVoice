@@ -7,7 +7,7 @@ use Email::Valid;
 use Number::Phone;
 
 # Semantic versioning FTW
-our $VERSION = '1.0.1';
+our $VERSION = '1.0.2';
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
@@ -97,6 +97,7 @@ post '/feedback' => sub {
                             email_address => $email_address,
                             phone_number  => $phone,
                             feedback      => $feedback,
+                            company_name  => config->{'company_name'},
                         },{ layout => undef }
                     )
                    ->add_envelope( to => \@{ config->{ contact_email } } )
