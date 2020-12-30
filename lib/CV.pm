@@ -7,7 +7,7 @@ use Email::Valid;
 use Number::Phone;
 
 # Semantic versioning FTW
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
