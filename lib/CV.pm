@@ -126,7 +126,7 @@ post '/feedback' => sub {
 #
 get '/thanks' => sub {
     # TODO (later): disable reviews once feedback form is submitted.
-    if( session->read( 'feedback_given' ) || params->{'test'} ){
+    if( session->read( 'feedback_given' ) || params->{'review'} ){
         app->destroy_session;
         render( 'thanks', {
             title        => 'Collective Voice',

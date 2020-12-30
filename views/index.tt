@@ -54,6 +54,21 @@ function component () {
       showModalForm: false,
       showModalReview: false,
 
+      // handle submissions on the review form page
+      submitReview() {
+        window.location = '/thanks?review=1';
+        /*
+        // TODO: Submit to /feedback then redirect to /thanks
+        const XHR = new XMLHttpRequest();
+        XHR.addEventListener( "load", function(event) {
+          if (XHR.status == 200) {
+            //alert('in submitReview');
+            window.location = '/thanks';
+          }
+        } );
+        */
+      },
+
       // handle submissions from the feedback form
       submitForm() {
         // Submit to /feedback then redirect to /thanks
