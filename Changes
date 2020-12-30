@@ -12,3 +12,7 @@ Revision history for Perl module Foo::Bar
   * Update the installation guide for Linode+Debian (INSTALL-Linode.md)
   * Add more exclusions to `bin/cvdeploy`
   * Add back `public/css/error.css`
+
+1.0.2 2020-12-29
+
+  * Pass in company_name to email template
