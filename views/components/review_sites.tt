@@ -2,7 +2,7 @@
 cols) | format('%.02f') %] [% ELSE %] [% SET colwidth = 100 %] [% END %]
 [% lc_top_site = top_review_site.site.lower %]
 <!-- ModalReview -->
-<div x-show="showModalReview" x-cloak>
+<div style="display:none" x-show="showModalReview" x-cloak>
 <div x-show.transition="showModalReview" class="fixed z-20 top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-25 flex items-center justify-center" role="dialog" aria-modal="true">
 
 <div @mousedown.away="showModalReview = false" @keydown.window.escape="showModalReview = false" class="w-full max-w-screen-sm bg-white rounded shadow-xl flex flex-col absolute divide-y divide-gray-200">
@@ -42,7 +42,7 @@ cols) | format('%.02f') %] [% ELSE %] [% SET colwidth = 100 %] [% END %]
             <div id="top_review_site" class="flex justify-center">
                 <div class="text-center p-2">
                   <!-- Main review site = [% top_review_site.site %] -->
-                  <a href="[% top_review_site.url %]" target="_blank"><img src="[% top_review_site.logo || logos.$lc_top_site %]" alt="[% top_review_site.site %] logo" class="mx-auto"></a>
+                  <a @click.debounce.250ms="submitReview" href="[% top_review_site.url %]" target="_blank"><img src="[% top_review_site.logo || logos.$lc_top_site %]" alt="[% top_review_site.site %] logo" class="mx-auto"></a>
                 </div>
             </div>
 
