@@ -92,7 +92,7 @@ OS: Debian 10
 
 
 ## Step 9: Configure the app to start on reboot (systemd)
-(see https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/)
+(see https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/ and https://www.linode.com/docs/guides/introduction-to-systemctl/)
 1. Copy the unit file in `bin/collectivevoice.service` to /etc/systemd/system and give it permissions
       1. `sudo cp bin/collectivevoice.service /etc/systemd/system/collectivevoice.service`
       2. `sudo chmod 644 /etc/systemd/system/collectivevoice.service`
