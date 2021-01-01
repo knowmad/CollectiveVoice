@@ -1,0 +1,17 @@
+{
+  "name": "Collective Voice",
+  "version": "1.0.2",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "autoprefixer": "^10.1.0",
+    "cssnano": "^4.1.10",
+    "postcss-cli": "^8.3.1",
+    "postcss-import": "^14.0.0",
+    "tailwindcss": "^2.0.2"
+  },
+  "scripts": {
+    "start:css": "postcss src/styles/index.css -o public/css/tailwind.css -w",
+    "build:css": "postcss src/styles/index.css -o public/css/tailwind.css --env production",
+    "build:tailwind": "tailwind build src/styles/index.css -o src/styles/tailwind.css"
+  }
+}

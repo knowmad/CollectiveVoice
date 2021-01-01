@@ -1,7 +1,7 @@
+<!-- ModalReview -->
 [% SET cols = review_sites.size %] [% IF cols > 1 %] [% SET colwidth = (100 /
 cols) | format('%.02f') %] [% ELSE %] [% SET colwidth = 100 %] [% END %]
 [% lc_top_site = top_review_site.site.lower %]
-<!-- ModalReview -->
 <div style="display:none" x-show="showModalReview" x-cloak>
 <div x-show.transition="showModalReview" class="fixed z-20 top-0 left-0 w-screen h-screen bg-gray-500 bg-opacity-25 flex items-center justify-center" role="dialog" aria-modal="true">
 
@@ -48,7 +48,7 @@ cols) | format('%.02f') %] [% ELSE %] [% SET colwidth = 100 %] [% END %]
 
             <div id="secondary_review_sites" class="mt-4 flex flex-wrap bg-gray-200">
                 [% FOREACH review_site IN review_sites %]
-                <div id="review_site_[% loop.count  %]" class="[% IF loop.size == 1 %][% THEN %]w-full[% ELSE %]w-1/[% loop.size %][% END %] text-gray-700 text-center bg-white py-2 px-6">
+                <div id="review_site_[% loop.count  %]" class="[% IF loop.size == 1 %][% THEN %]w-full[% ELSIF loop.size == 2 %]w-1/2[% ELSE %]w-1/3[% END %] text-gray-700 text-center bg-white py-2 px-6">
                   <!-- Review site #[% loop.count %] - [% review_site.site %] -->
                   [% lcsite = review_site.site.lower %]
                   <a @click.debounce.250ms="submitReview" href="[% review_site.url %]" target="_blank">

@@ -87,6 +87,24 @@ These files can contain the following settings:
 * ratings: labels/descriptions for 1-5 stars
 * sendgrid: Sendgrid credentials for email delivery
 
+## Tailwindcss + PurgeCSS
+
+By default, we are loading the minified but full library of Tailwind CSS from (see 'views/layouts/main.tt'). However, we are using a small fraction of the classes and tailwind recommends optimizing the library by compiling your CSS. I referred to a variety of sources during this step:
+  1. https://tailwindcss.com/docs/using-with-preprocessors#using-post-css-as-your-preprocessor
+  2. https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/build-tools
+  3. https://flaviocopes.com/tailwind-setup/
+
+Setup your environment as follows:
+
+1. `npm install tailwindcss@latest postcss@latest autoprefixer@latest`
+2. `npm install postcss-cli`
+
+After installing required files, use the following sequence to reduce the size of the CSS library:
+
+1. `npm install`
+2. `npm run build:tailwind` (this builds the full tailwindcss file)
+3. `npm run build:css` (updates the file in public/css/tailwind.css)
+
 
 ## Deploying/Running the Application in production
 
