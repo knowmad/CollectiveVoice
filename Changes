@@ -1,8 +1,9 @@
 Revision history for Perl module Foo::Bar
 
-1.0.0 2020-12-14
+1.0.2 2020-12-29
 
-  * Inital public release
+  * Pass in company_name to email template
+
 
 1.0.1 2020-12-29
 
@@ -13,6 +14,7 @@ Revision history for Perl module Foo::Bar
   * Add more exclusions to `bin/cvdeploy`
   * Add back `public/css/error.css`
 
-1.0.2 2020-12-29
 
-  * Pass in company_name to email template
+1.0.0 2020-12-14
+
+  * Inital public release
