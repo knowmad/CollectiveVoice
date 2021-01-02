@@ -3,3 +3,7 @@
 @tailwind components;
 
 @tailwind utilities;
+
+input, textarea {
+  @apply pl-1;
+}
