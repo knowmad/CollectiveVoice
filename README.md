@@ -105,6 +105,8 @@ After installing required files, use the following sequence to reduce the size o
 2. `npm run build:tailwind` (this builds the full tailwindcss file)
 3. `npm run build:css` (updates the file in public/css/tailwind.css)
 
+*NB: I have not had success getting the above steps to properly build breakpoints as documented at https://tailwindcss.com/docs/breakpoints. Not sure what I may be doing wrong but for now have just eliminated the use of screen size variants (e.g., 'sm:' or 'md:').*
+
 
 ## Deploying/Running the Application in production
 
