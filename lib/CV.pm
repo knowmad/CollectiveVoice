@@ -95,7 +95,7 @@ post '/feedback' => sub {
                         template 'email_feedback', {
                             full_name     => $name,
                             email_address => $email_address,
-                            phone_number  => $phone,
+                            phone_number  => $phone->format_for_country('US'),
                             feedback      => $feedback,
                             company_name  => config->{'company_name'},
                         },{ layout => undef }
