@@ -19,7 +19,7 @@ my $mech = Test::WWW::Mechanize::PSGI->new( app => $app );
 $mech->get_ok('/');
 $mech->content_contains("1 - Acme Widgets, Inc.", "Company name is loaded from the correct config file");
 $mech->content_contains("Google", "Loaded the top review site");
-$mech->content_lacks("Facebook", "Did not load review site");
+$mech->content_lacks("facebook.png", "Did not load review site");
 $mech->content_lacks("Yelp", "Did not load review site");
 $mech->content_lacks("Upcity", "Did not load review site");
 
