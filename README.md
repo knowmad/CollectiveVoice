@@ -96,8 +96,7 @@ By default, we are loading the minified but full library of Tailwind CSS from (s
 
 Setup your environment as follows:
 
-1. `npm install tailwindcss@latest postcss@latest autoprefixer@latest`
-2. `npm install postcss-cli`
+`npm install tailwindcss@latest postcss@latest autoprefixer@latest postcss-cli`
 
 After installing required files, use the following sequence to reduce the size of the CSS library:
 
