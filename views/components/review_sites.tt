@@ -48,7 +48,7 @@ cols) | format('%.02f') %] [% ELSE %] [% SET colwidth = 100 %] [% END %]
 
             <div id="secondary_review_sites" class="mt-4 flex flex-wrap bg-gray-200">
                 [% FOREACH review_site IN review_sites %]
-                <div id="review_site_[% loop.count  %]" class="[% IF loop.size == 1 %][% THEN %]w-full[% ELSIF loop.size == 2 %]w-1/2[% ELSE %]w-1/3[% END %] text-gray-700 text-center bg-white py-2 px-6">
+                <div id="review_site_[% loop.count  %]" class="[% IF loop.size == 1 %][% THEN %]w-full[% ELSIF loop.size == 2 %]w-1/2[% ELSE %]w-1/3[% END %] text-gray-700 text-center bg-white py-2 px-3">
                   <!-- Review site #[% loop.count %] - [% review_site.site %] -->
                   [% lcsite = review_site.site.lower %]
                   <a @click.debounce.250ms="submitReview" href="[% review_site.url %]" target="_blank">
