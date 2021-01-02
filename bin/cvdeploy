@@ -21,8 +21,8 @@ fi
 
 rsync -rvz --update -e "ssh -p $CV_DEPLOY_PORT" --links \
  --exclude 'local' --exclude 'sessions' --exclude '.git' \
- --exclude 'logs' --exclude 'run' --exclude 'eg' \
+ --exclude 'logs' --exclude '*node_modules' --exclude 'run' \
  --exclude '*-local*' --exclude '*.example' --exclude "*~" \
- --exclude '.DS_Store' \
+ --exclude 'eg' --exclude '.DS_Store' \
  $@ \
  --delete $CV_ROOT $CV_DEPLOY_USER@$CV_DEPLOY_HOST:$CV_DEPLOY_DIR
