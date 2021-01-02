@@ -10,8 +10,8 @@
     "tailwindcss": "^2.0.2"
   },
   "scripts": {
-    "start:css": "postcss src/styles/index.css -o public/css/tailwind.css -w",
-    "build:css": "postcss src/styles/index.css -o public/css/tailwind.css --env production",
-    "build:tailwind": "tailwind build src/styles/index.css -o src/styles/tailwind.css"
+    "start:css": "postcss src/styles/style.css -o public/css/tailwind.css -w",
+    "build:css": "postcss src/styles/style.css -o public/css/tailwind.css --env production",
+    "build:tailwind": "tailwind build src/styles/style.css -o src/styles/tailwind.css"
   }
 }
