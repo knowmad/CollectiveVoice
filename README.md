@@ -181,7 +181,7 @@ Links to more information about Tailwind and AlpineJS:
 
 ## Copyright and License
 
-This software is copyright (c) 2020 by William McKee (knowmad).
+This software is copyright (c) 2020-2021 by William McKee (knowmad).
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

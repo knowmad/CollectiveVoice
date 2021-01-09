@@ -191,7 +191,7 @@ Collective Voice (CV) - a Dancer2 app to generate online reviews
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.2
 
 =head1 DESCRIPTION
 
@@ -204,7 +204,7 @@ William McKee (knowmad)
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2020 by William McKee.
+This software is copyright (c) 2020-2021 by William McKee.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
