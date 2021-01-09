@@ -8,3 +8,4 @@ run/
 environments/shell-env-local
 environments/shell-env-local-*
 .DS_Store
+src/styles/tailwind.css
