@@ -7,7 +7,7 @@ use Email::Valid;
 use Number::Phone;
 
 # Semantic versioning FTW
-our $VERSION = '1.0.2';
+our $VERSION = '1.0.3';
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
@@ -78,6 +78,9 @@ post '/feedback' => sub {
         }
     }
 
+    my $rating      = body_parameters->get( 'rating' );
+    my $rating_text = body_parameters->get( 'rating_text' );
+
     my $feedback = body_parameters->get( 'feedback' );
     $errors{ no_feedback } = 'Please provide some feedback.' unless $feedback;
 
@@ -96,6 +99,8 @@ post '/feedback' => sub {
                             full_name     => $name,
                             email_address => $email_address,
                             phone_number  => $phone->format_for_country('US'),
+                            rating        => $rating,
+                            rating_text   => $rating_text,
                             feedback      => $feedback,
                             company_name  => config->{'company_name'},
                         },{ layout => undef }
