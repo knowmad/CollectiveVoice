@@ -3,8 +3,9 @@ package CV;
 use CV::Base qw( WebApp );
 use Dancer2::Plugin::Debugger;
 use Try::Tiny;
-use Email::Valid;
-use Number::Phone;
+use Email::Simple;
+use Email::Sender::Simple qw( sendmail );
+use Email::Sender::Transport::SMTP;
 
 # Semantic versioning FTW
 our $VERSION = '1.0.3';
@@ -20,6 +21,7 @@ hook 'before' => sub {
         var ajax => 0;
     }
 };
+
 hook on_route_exception => sub {
     my ($app, $error) = @_;
     if ( ($error =~ /undefined value/) && !exists(config->{ review_sites }) ) {
@@ -93,34 +95,40 @@ post '/feedback' => sub {
     } else {
         my $result;
         try {
-            my $sg  = Email::SendGrid::V3->new( api_key => config->{ sendgrid }{ api_key } );
-            $result =
-                $sg->from( config->{ sendgrid }{ from } )
-                   ->subject( "[CollectiveVoice] You've received new feedback!" )
-                   ->add_content( 'text/plain',
-                        template 'email_feedback', {
-                            full_name     => $name,
-                            email_address => $email_address,
-                            phone_number  => $phone,
-                            rating        => $rating,
-                            rating_text   => $rating_text,
-                            feedback      => $feedback,
-                            company_name  => config->{'company_name'},
-                        },{ layout => undef }
-                    )
-                   ->add_envelope( to => \@{ config->{ contact_email } } )
-                   ->send;
-
-            die $result->{ reason } unless $result->{ success };
+            my $transport = Email::Sender::Transport::SMTP->new({
+                host          => config->{ mailserver }{ host },
+                port          => config->{ mailserver }{ port },
+                sasl_username => config->{ mailserver }{ username },
+                sasl_password => config->{ mailserver }{ password },
+            });
+            foreach my $recipient( config->{ contact_email }->@* ) {
+                my $text = template 'email_feedback', {
+                        full_name     => $name,
+                        email_address => $email_address,
+                        phone_number  => $phone,
+                        rating        => $rating,
+                        rating_text   => $rating_text,
+                        feedback      => $feedback,
+                        company_name  => config->{'company_name'},
+                    },{ layout => undef };
+                my $email = Email::Simple->create(
+                    header => [
+                        From     => config->{ mailserver }{ from },
+                        To       => $recipient,
+                        Subject  => "[CollectiveVoice] You've received new feedback!",
+                    ],
+                    body   => $text,
+                );
+                sendmail( $email, { transport => $transport });
+            }
         } catch {
-            my $error_msg = "Couldn't send feedback email: $_";
+            my $error_msg = "Couldn't send feedback email: " . $_->{ message };
             error $error_msg;
             status 400;
-            $errors{ err_message } = $_;
+            $errors{ err_message }   = $_;
             $errors{ no_email_send } = 1;
             send_as JSON => \%errors;
         };
-        # $result->{ success };
         session 'feedback_given' => 1;
     }
 };

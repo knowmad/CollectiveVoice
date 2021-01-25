@@ -56,7 +56,9 @@ requires 'Dancer2::Plugin::Adapter';
 requires 'Starlet';
 requires 'Server::Starter';
 requires 'Email::Valid';
-requires 'Email::SendGrid::V3';
+requires 'Email::Sender::Simple';
+requires 'Email::Simple';
+requires 'Authen::SASL';
 requires 'Number::Phone';
 requires 'Number::Phone::US';
 

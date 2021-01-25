@@ -1,10 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More skip_all => 'need to rewrite for Email::Sender';
-
-
-
+use Dancer2;
 use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
 BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' } # Don't send emails!
@@ -30,6 +27,9 @@ $mech->post_ok( '/feedback', {
 
 # Check for an email with feedback details
 my @good_emails = Email::Sender::Simple->default_transport->deliveries;
-cmp_ok( scalar @good_emails, '==', 1, "...and we sent an email when a complete form was received." );
+my $recipients  = scalar config->{ contact_email }->@*;
+cmp_ok( scalar @good_emails, '==', $recipients, 
+    "...and we sent an email to each recipient when a complete form was received." 
+);
 
 done_testing();
