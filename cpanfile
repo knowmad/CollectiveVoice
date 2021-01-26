@@ -58,7 +58,7 @@ requires 'Server::Starter';
 requires 'Email::Valid';
 requires 'Email::SendGrid::V3';
 requires 'Number::Phone';
-requires 'Number::Phone::US';
+requires 'Number::Phone::NANP';
 
 # Expect this list to get pruned, not sure how some are different than others
 on 'develop' => sub {

@@ -72,12 +72,12 @@ post '/feedback' => sub {
     my $phone_number = body_parameters->get( 'phone_number' );
     my $phone;
     if( $phone_number ) {
-        $phone = Number::Phone->new( 'US', $phone_number );
+        $phone = Number::Phone->new( 'NANP', $phone_number );
         if( !defined $phone or not $phone->is_valid ) {
             $errors{ bad_phone } = 'Please enter a valid phone number.';
         }
         else {
-          $phone = $phone->format_for_country('US');
+          $phone = $phone->format_for_country('NANP');
         }
     }
 
