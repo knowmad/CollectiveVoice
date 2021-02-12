@@ -76,6 +76,9 @@ post '/feedback' => sub {
         if( !defined $phone or not $phone->is_valid ) {
             $errors{ bad_phone } = 'Please enter a valid phone number.';
         }
+        else {
+          $phone = $phone->format_for_country('US');
+        }
     }
 
     my $rating      = body_parameters->get( 'rating' );
@@ -98,7 +101,7 @@ post '/feedback' => sub {
                         template 'email_feedback', {
                             full_name     => $name,
                             email_address => $email_address,
-                            phone_number  => $phone->format_for_country('US'),
+                            phone_number  => $phone,
                             rating        => $rating,
                             rating_text   => $rating_text,
                             feedback      => $feedback,
