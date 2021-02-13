@@ -89,7 +89,7 @@ post '/feedback' => sub {
         else {
           $phone_number = $phone->format_for_country('NANP');
         }
-    else {
+    } else {
         # Leave the number as-entered
         $phone_number = body_parameters->get( 'phone_number' );
     }
