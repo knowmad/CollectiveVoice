@@ -18,7 +18,7 @@ our @IMPORT_MODULES = (
 our %IMPORT_BUNDLES = (
     CLI    => [ qw( Getopt::Long )],
     WebApp => [ qw( Dancer2 Dancer2::Plugin::Minify Dancer2::Plugin::Deferred 
-        Dancer2::Plugin::Adapter Dancer2::Plugin::Syntax::GetPost Email::SendGrid::V3 )],
+        Dancer2::Plugin::Adapter Dancer2::Plugin::Syntax::GetPost Email::Valid Number::Phone )],
     Object => [ qw( Moo )],
     Test   => [ qw( Test::Most )],
 );

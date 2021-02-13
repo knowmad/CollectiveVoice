@@ -3,11 +3,12 @@ package CV;
 use CV::Base qw( WebApp );
 use Dancer2::Plugin::Debugger;
 use Try::Tiny;
-use Email::Valid;
-use Number::Phone;
+use Email::Simple;
+use Email::Sender::Simple qw( sendmail );
+use Email::Sender::Transport::SMTP;
 
 # Semantic versioning FTW
-our $VERSION = '1.0.3';
+our $VERSION = '1.0.4';
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
@@ -20,6 +21,7 @@ hook 'before' => sub {
         var ajax => 0;
     }
 };
+
 hook on_route_exception => sub {
     my ($app, $error) = @_;
     if ( ($error =~ /undefined value/) && !exists(config->{ review_sites }) ) {
@@ -70,15 +72,26 @@ post '/feedback' => sub {
     }
 
     my $phone_number = body_parameters->get( 'phone_number' );
-    my $phone;
-    if( $phone_number ) {
-        $phone = Number::Phone->new( 'US', $phone_number );
-        if( !defined $phone or not $phone->is_valid ) {
-            $errors{ bad_phone } = 'Please enter a valid phone number.';
+    $phone_number =~ s/\D+//g;
+    if( length($phone_number) == 10 || length($phone_number) == 11 ) {
+      # Format the number
+        $phone_number = "+1-$phone_number" if length($phone_number) == 10;
+        my $phone = Number::Phone->new( 'NANP', $phone_number );
+        #use Data::Dumper; error Dumper($phone);
+        if( !defined $phone ) {
+            error ("Could not process phone number: '$phone_number'.");
+            $errors{ bad_phone } = 'Please enter a valid US phone number.';
+        }
+        if( not $phone->is_valid ) {
+            error ("Invalid phone number received: '$phone_number'.");
+            $errors{ bad_phone } = 'Please enter a valid US phone number.';
         }
         else {
-          $phone = $phone->format_for_country('US');
+          $phone_number = $phone->format_for_country('NANP');
         }
+    } else {
+        # Leave the number as-entered
+        $phone_number = body_parameters->get( 'phone_number' );
     }
 
     my $rating      = body_parameters->get( 'rating' );
@@ -88,39 +101,47 @@ post '/feedback' => sub {
     $errors{ no_feedback } = 'Please provide some feedback.' unless $feedback;
 
     if( %errors ) {
+        my $error_msg = "Form errors = {" . join(", ", map { "$_ = $errors{$_}" } keys %errors) . "}";
+        error $error_msg;
         status 400;
         send_as JSON => \%errors;
     } else {
         my $result;
         try {
-            my $sg  = Email::SendGrid::V3->new( api_key => config->{ sendgrid }{ api_key } );
-            $result =
-                $sg->from( config->{ sendgrid }{ from } )
-                   ->subject( "[CollectiveVoice] You've received new feedback!" )
-                   ->add_content( 'text/plain',
-                        template 'email_feedback', {
-                            full_name     => $name,
-                            email_address => $email_address,
-                            phone_number  => $phone,
-                            rating        => $rating,
-                            rating_text   => $rating_text,
-                            feedback      => $feedback,
-                            company_name  => config->{'company_name'},
-                        },{ layout => undef }
-                    )
-                   ->add_envelope( to => \@{ config->{ contact_email } } )
-                   ->send;
-
-            die $result->{ reason } unless $result->{ success };
+            my $transport = Email::Sender::Transport::SMTP->new({
+                host          => config->{ mailserver }{ host },
+                port          => config->{ mailserver }{ port },
+                sasl_username => config->{ mailserver }{ username },
+                sasl_password => config->{ mailserver }{ password },
+            });
+            foreach my $recipient( config->{ contact_email }->@* ) {
+                my $text = template 'email_feedback', {
+                        full_name     => $name,
+                        email_address => $email_address,
+                        phone_number  => $phone_number,
+                        rating        => $rating,
+                        rating_text   => $rating_text,
+                        feedback      => $feedback,
+                        company_name  => config->{'company_name'},
+                    },{ layout => undef };
+                my $email = Email::Simple->create(
+                    header => [
+                        From     => config->{ mailserver }{ from },
+                        To       => $recipient,
+                        Subject  => "[CollectiveVoice] You've received new feedback!",
+                    ],
+                    body   => $text,
+                );
+                sendmail( $email, { transport => $transport });
+            }
         } catch {
-            my $error_msg = "Couldn't send feedback email: $_";
+            my $error_msg = "Couldn't send feedback email: " . $_->{ message };
             error $error_msg;
             status 400;
-            $errors{ err_message } = $_;
+            $errors{ err_message }   = $_;
             $errors{ no_email_send } = 1;
             send_as JSON => \%errors;
         };
-        # $result->{ success };
         session 'feedback_given' => 1;
     }
 };
@@ -199,7 +220,7 @@ Collective Voice (CV) - a Dancer2 app to generate online reviews
 
 =head1 VERSION
 
-version 1.0.3
+version 1.0.4
 
 =head1 DESCRIPTION
 

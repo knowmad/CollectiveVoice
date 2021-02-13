@@ -1,5 +1,11 @@
 Revision history for CollectiveVoice
 
+1.0.4 2020-02-13
+
+  * Refactor email sending infrastructure (cromedome)
+  * Be more lenient about phone number format
+
+
 1.0.3 2020-02-11
 
   * Pass rating and rating description to the email template
