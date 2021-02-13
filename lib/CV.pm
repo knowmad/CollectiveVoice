@@ -8,7 +8,7 @@ use Email::Sender::Simple qw( sendmail );
 use Email::Sender::Transport::SMTP;
 
 # Semantic versioning FTW
-our $VERSION = '1.0.3';
+our $VERSION = '1.0.4';
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
@@ -219,7 +219,7 @@ Collective Voice (CV) - a Dancer2 app to generate online reviews
 
 =head1 VERSION
 
-version 1.0.2
+version 1.0.4
 
 =head1 DESCRIPTION
 

@@ -1,10 +1,16 @@
 Revision history for CollectiveVoice
 
+1.0.4 YYYY-MM-DD
+
+  * Refactor email sending infrastructure (cromedome)
+
+
 1.0.3 YYYY-MM-DD
 
   * Pass rating and rating description to the email template
   * Update email template to include rating details
   * Bugfix: empty phone number field caused an error
+
 
 1.0.2 2020-12-29
 
