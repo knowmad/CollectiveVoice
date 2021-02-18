@@ -82,7 +82,7 @@ post '/feedback' => sub {
             error ("Could not process phone number: '$phone_number'.");
             $errors{ bad_phone } = 'Please enter a valid US phone number.';
         }
-        if( not $phone->is_valid ) {
+        elsif( not $phone->is_valid ) {
             error ("Invalid phone number received: '$phone_number'.");
             $errors{ bad_phone } = 'Please enter a valid US phone number.';
         }
