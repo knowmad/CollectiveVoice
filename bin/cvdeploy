@@ -15,11 +15,13 @@ fi
 # -r: recursive
 # -v: verbose
 # -z: compress
-# --update: - updates remote files with newer local copies
+# --checksum: if file size and time match, do a checksum at both ends to see if the files are really identical.
 # -e: use external command to connect via ssh
+# --filter: excluding things in .gitignore
 # --exclude: multiple excludes to remove localized directories and files
 
-rsync -rvz --update -e "ssh -p $CV_DEPLOY_PORT" --links \
+rsync -rvz --checksum -e "ssh -p $CV_DEPLOY_PORT" --links \
+ --filter=":- .gitignore" \
  --exclude 'local' --exclude 'sessions' --exclude '.git' \
  --exclude 'logs' --exclude '*node_modules' --exclude 'run' \
  --exclude '*-local*' --exclude '*.example' --exclude "*~" \
