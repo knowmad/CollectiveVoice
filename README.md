@@ -156,7 +156,12 @@ messages to the selected logging library:
 `error $message;`
 
 
-## Logos
+## Client Logos
+
+Max dimensions for client logos are 400px x 300px (width x height).
+
+
+## Review Site Logos
 
 Any logo images need to be reviewed for copyright.
 

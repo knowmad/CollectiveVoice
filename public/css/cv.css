@@ -12,6 +12,10 @@ p  { font-size:12px; }
     background: white;
 }
 
+.company-logo img {
+  max-width:450px;
+  max-height:300px;
+}
 
 /*
 Discourage spam form submissions
