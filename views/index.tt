@@ -1,5 +1,5 @@
 [% WRAPPER components/section.tt title = "Home" %]
-<div class="text-center pb-4">
+<div class="text-center pb-4 company-logo">
   <img class="mx-auto" src="[% company_logo %]" alt="[% company_name %] Logo" title="[% company_name %]">
 </div>
 
