@@ -110,5 +110,6 @@ OS: Debian 10
       1. To restart the service -- `sudo systemctl restart collectivevoice`
       2. To reset after 'start-limit-hit' -- `systemctl reset-failed collectivevoice.service`
       3. View failed services -- `sudo systemctl list-units --state failed`
+      4. View logfiles - `sudo journalctl UNIT=collectivevoice.service`
 2. Error "start_server: command not found"
       1. Add `export PATH=local/bin:$PATH` to your `shell-env-local` file

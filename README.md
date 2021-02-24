@@ -32,6 +32,30 @@ below (detail instructions follow):
 3. start the app with `./bin/cvlauncher console`
 
 
+## Setting Up Your environment
+
+If you have not installed `plenv` or `perlbrew`, you'll need to take a few first
+steps to get your environment.
+
+Here's my recommendations:
+
+1. Install `plenv` by following the steps at https://github.com/tokuhirom/plenv.
+On a Mac OS, here's the steps:
+  1. `brew update`
+  2. `brew install plenv`
+  3. `brew install perl-build`
+  4. `plenv install 5.32.1` (or whatever version you want)
+  5. `plenv global 5.32.1`
+  6. `plenv rehash`
+  7. `plenv install-cpanm`
+
+2. Install Carton
+  1. `cpanm Carton`
+  2. `plenv rehash`
+
+3. Install `ExtUtils::MakeMaker` from homebrew
+
+
 ## Setting Up the Application
 
 As always in Perl, TIMTOWTDI! You can either use your system Perl,
