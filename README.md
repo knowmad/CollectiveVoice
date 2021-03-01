@@ -27,9 +27,11 @@ review portal can benefit.
 If you have a modern Perl already installed, you can get started with the steps
 below (detail instructions follow):
 
-1. run `carton install`
-2. edit `environments/shell-env`
-3. start the app with `./bin/cvlauncher console`
+1. clone the repository to your working environment
+2. get into the directory `cd CollectiveVoice`
+3. run `carton install`
+4. edit `environments/shell-env`
+5. start the app with `./bin/cvlauncher console`
 
 
 ## Setting Up Your environment
@@ -37,10 +39,9 @@ below (detail instructions follow):
 If you have not installed `plenv` or `perlbrew`, you'll need to take a few first
 steps to get your environment.
 
-Here's my recommendations:
+Here's my Mac OS recommendations:
 
 1. Install `plenv` by following the steps at https://github.com/tokuhirom/plenv.
-On a Mac OS, here's the steps:
   1. `brew update`
   2. `brew install plenv`
   3. `brew install perl-build`
