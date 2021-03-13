@@ -1,4 +1,5 @@
 company_name: "2 - Acme Widgets, Inc."
+rating_threshold: 2
 
 review_sites:
     -

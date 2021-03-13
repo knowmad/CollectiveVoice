@@ -47,6 +47,7 @@ get '/'  => sub {
         'top_review_site'  => $top_site,
         'review_sites'     => \@sites,
         'logos'            => config->{ logos },
+        'rating_threshold' => config->{'rating_threshold'} || '3',
     });
 };
 

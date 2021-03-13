@@ -10,7 +10,7 @@
 
       <button @click.prevent="rating = star;
       ratingText = ratingDesc[rating];
-      if (rating > 3) { showModalReview = true;  showModalForm = false; }
+      if (rating > [% rating_threshold %]) { showModalReview = true;  showModalForm = false; }
       else            { showModalReview = false; showModalForm = true;  }"
       @mouseover="hoverRating = star; ratingText = ratingDesc[hoverRating];"
       @mouseleave="hoverRating = rating; ratingText = ratingDesc[rating] || '';"

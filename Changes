@@ -3,6 +3,8 @@ Revision history for CollectiveVoice
 1.0.5 YYYY-mm-dd
 
   * Use brand color for feedback form button
+  * Add rating_threshold option to config.yml for controlling when to display the rating sites
+
 
 1.0.4 2021-02-13
 
