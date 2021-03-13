@@ -43,6 +43,7 @@ get '/'  => sub {
         'page_title'       => config->{'page_title'},
         'page_description' => config->{'page_description'},
         'ratings'          => config->{ ratings },
+        'brand_color'      => config->{ brand_color },
         'top_review_site'  => $top_site,
         'review_sites'     => \@sites,
         'logos'            => config->{ logos },

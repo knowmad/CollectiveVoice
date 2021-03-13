@@ -70,7 +70,7 @@
 
           <!-- TODO: Disable submit button until required fields are filled in -->
           <!-- TODO: Change message and disable submit button when form is submitted -->
-        <button @click.prevent="submitForm($refs)" type="submit" class="rounded px-5 py-2 rounded-sm bg-indigo-600 text-white font-semibold transition duration-150 hover:bg-indigo-500 focus:outline-none focus:shadow-outline" id="send_feedback">Send Feedback</button>
+        <button @click.prevent="submitForm($refs)" type="submit" class="rounded px-5 py-2 rounded-sm bg-indigo-600 text-white font-semibold transition duration-150 hover:bg-indigo-500 focus:outline-none focus:shadow-outline" style="background-color:[% brand_color %]" id="send_feedback">Send Feedback</button>
       </div>
 
 
