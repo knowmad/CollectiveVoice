@@ -1,0 +1,9 @@
+# Web Resources for Collective Collective Voice
+
+## GitHub project
+
+https://github.com/knowmad/CollectiveVoice
+
+## Articles
+
+- [Collective Voice: Using Dancer2 at a Digital Marketing Agency](https://advent.perldancer.org/2020/14) (part of the [2020 Twelve Days of Dancer](https://advent.perldancer.org/2020))

@@ -8,7 +8,7 @@ use Email::Sender::Simple qw( sendmail );
 use Email::Sender::Transport::SMTP;
 
 # Semantic versioning FTW
-our $VERSION = '1.0.4';
+our $VERSION = '1.0.5';
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
@@ -43,9 +43,11 @@ get '/'  => sub {
         'page_title'       => config->{'page_title'},
         'page_description' => config->{'page_description'},
         'ratings'          => config->{ ratings },
+        'brand_color'      => config->{ brand_color },
         'top_review_site'  => $top_site,
         'review_sites'     => \@sites,
         'logos'            => config->{ logos },
+        'rating_threshold' => config->{'rating_threshold'} || '3',
     });
 };
 
@@ -82,7 +84,7 @@ post '/feedback' => sub {
             error ("Could not process phone number: '$phone_number'.");
             $errors{ bad_phone } = 'Please enter a valid US phone number.';
         }
-        if( not $phone->is_valid ) {
+        elsif( not $phone->is_valid ) {
             error ("Invalid phone number received: '$phone_number'.");
             $errors{ bad_phone } = 'Please enter a valid US phone number.';
         }
