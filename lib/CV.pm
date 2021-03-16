@@ -8,7 +8,7 @@ use Email::Sender::Simple qw( sendmail );
 use Email::Sender::Transport::SMTP;
 
 # Semantic versioning FTW
-our $VERSION = '1.0.4';
+our $VERSION = '1.0.5';
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
