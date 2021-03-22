@@ -40,20 +40,17 @@ $mech->get('/');
 $mech->post( '/feedback', {} );
 is( $mech->status, 400, 'Get a 400 status when posting an empty form. Good.' );
 
-SKIP: {
-  skip 'need to implement Email::Sender for Sendgrid', 1;
 
-  # Do we get 200 OK on success?
-  $mech->post_ok( '/feedback', {
-          full_name     => 'Test User',
-          email_address => 'none@none.com',
-          phone_number  => '8005551212',
-          feedback      => 'You did well, and I should have given you more stars.',
-      });
+# Do we get 200 OK on success?
+$mech->post_ok( '/feedback', {
+        full_name     => 'Test User',
+        email_address => 'none@none.com',
+        phone_number  => '8005551212',
+        feedback      => 'You did well, and I should have given you more stars.',
+    });
 
-  # Can we go to receive thanks if so?
-  $mech->get_ok( '/thanks', '...and get thanked for doing so!' );
-}
+# Can we go to receive thanks if so?
+$mech->get_ok( '/thanks', '...and get thanked for doing so!' );
 
 
 # Can we only go to get thanked once?
