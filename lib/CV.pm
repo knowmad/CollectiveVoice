@@ -137,7 +137,7 @@ post '/feedback' => sub {
                 sendmail( $email, { transport => $transport });
             }
         } catch {
-            my $error_msg = "Couldn't send feedback email: " . $_->{ message };
+            my $error_msg = "Couldn't send feedback email: $_";
             error $error_msg;
             status 400;
             $errors{ err_message }   = $_;
@@ -146,6 +146,8 @@ post '/feedback' => sub {
         };
         session 'feedback_given' => 1;
     }
+
+    # Callback to external method, if provided
 };
 
 #
