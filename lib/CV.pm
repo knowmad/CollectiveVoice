@@ -147,7 +147,12 @@ post '/feedback' => sub {
         session 'feedback_given' => 1;
     }
 
-    # Callback to external method, if provided
+    # TODO: Callback to external method, if provided
+    if( my $module = config->{ feedback_module } ) {
+        require_module( $module );
+        my $sub = config->{ feedback_sub };
+        #$module::$sub( 'some', 'args' );
+    }
 };
 
 #
