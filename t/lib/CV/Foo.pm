@@ -6,6 +6,14 @@ sub echo {
   return $arg;
 }
 
+sub before_feedback {
+  my $vars = @_;
+}
+
+sub after_feedback {
+  my $vars = @_;
+}
+
 
 1;
 

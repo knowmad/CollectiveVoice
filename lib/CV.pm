@@ -55,12 +55,18 @@ post '/feedback' => sub {
     # Trap the bots in an accessible way
     my $spam_1 = body_parameters->get( 'go' );
     my $spam_2 = body_parameters->get( 'away' );
-
     redirect 'https://en.wikipedia.org/wiki/Three_Laws_of_Robotics'
         if $spam_1 || $spam_2;
 
-    # Ok, we seem to be a real human, so generate some feedback
+    # Ok, we seem to be a real human, so process the feedback
     my %errors;
+
+    # TODO: Callback to external method, if provided
+    if( my $module = config->{ feedback_module } ) {
+        require_module( $module );
+        my $sub = config->{ before_feedback_sub };
+        #$module::$sub( 'some', 'args' );
+    }
 
     my $name = body_parameters->get( 'full_name' );
     $errors{ no_name } = 'Please enter your full name.' unless $name;
@@ -150,7 +156,7 @@ post '/feedback' => sub {
     # TODO: Callback to external method, if provided
     if( my $module = config->{ feedback_module } ) {
         require_module( $module );
-        my $sub = config->{ feedback_sub };
+        my $sub = config->{ after_feedback_sub };
         #$module::$sub( 'some', 'args' );
     }
 };

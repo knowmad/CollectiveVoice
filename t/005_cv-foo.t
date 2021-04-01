@@ -12,9 +12,17 @@ use CV::Foo;
 my $app = CV->to_app;
 is (ref $app, 'CODE', 'Got the test app');
 
-# Can we run the callback routine?
+# Call the echo routine in our callback module
 my $e = CV::Foo::echo('test');
-is($e,'test','Callback routine worked as expected');
+is($e,'test','Callback `echo` routine worked as expected');
 
+SKIP: {
+  skip "Need way to test that the `before_feedback` and `after_feedback` subroutines have run.", 1;
+  # Test the before_feedback subroutine
+  # TODO: How are we going to do this? I want to be able to bail out if this callback tells it to.
+
+  # Test the after_feedback subroutine
+  # TODO: How are we going to do this? Use an external file?
+}
 
 done_testing();
