@@ -25,6 +25,13 @@ review_sites:
         url: https://upcity.com/local-marketing-agencies/profiles/knowmad#review
         logo: /images/logos/upcity-logo.png
 
-sendgrid:
-    api_key: your_key_goes_here
-    from: 'noreply@collectivevoice.com'
+# Ports can be:
+# 25 - unencrypted
+# 587: TLS
+# 465: SSL
+mailserver:
+    from: "no-reply@yourdomain.com"
+    host: smtp.yourhost.net
+    username: email_username
+    password: foobar
+    port: 587
