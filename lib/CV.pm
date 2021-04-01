@@ -52,6 +52,13 @@ get '/'  => sub {
 };
 
 post '/feedback' => sub {
+    # TODO: Callback to external method, if provided
+    if( my $module = config->{ feedback_module } ) {
+        require_module( $module );
+        my $sub = config->{ before_feedback_sub };
+        #$module::$sub( params, vars );
+    }
+
     # Trap the bots in an accessible way
     my $spam_1 = body_parameters->get( 'go' );
     my $spam_2 = body_parameters->get( 'away' );
@@ -60,13 +67,6 @@ post '/feedback' => sub {
 
     # Ok, we seem to be a real human, so process the feedback
     my %errors;
-
-    # TODO: Callback to external method, if provided
-    if( my $module = config->{ feedback_module } ) {
-        require_module( $module );
-        my $sub = config->{ before_feedback_sub };
-        #$module::$sub( 'some', 'args' );
-    }
 
     my $name = body_parameters->get( 'full_name' );
     $errors{ no_name } = 'Please enter your full name.' unless $name;
