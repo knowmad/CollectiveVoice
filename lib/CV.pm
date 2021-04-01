@@ -111,8 +111,6 @@ post '/feedback' => sub {
     if( %errors ) {
         my $error_msg = "Form errors = {" . join(", ", map { "$_ = $errors{$_}" } keys %errors) . "}";
         error $error_msg;
-        status 400;
-        send_as JSON => \%errors;
     } else {
         my $result;
         try {
@@ -142,22 +140,25 @@ post '/feedback' => sub {
                 );
                 sendmail( $email, { transport => $transport });
             }
+            session 'feedback_given' => 1;
         } catch {
             my $error_msg = "Couldn't send feedback email: $_";
             error $error_msg;
-            status 400;
             $errors{ err_message }   = $_;
             $errors{ no_email_send } = 1;
-            send_as JSON => \%errors;
         };
-        session 'feedback_given' => 1;
     }
 
-    # TODO: Callback to external method, if provided
+    # TODO: Callback to external method, if provided, with %errors
     if( my $module = config->{ feedback_module } ) {
         require_module( $module );
         my $sub = config->{ after_feedback_sub };
-        #$module::$sub( 'some', 'args' );
+        #$module::$sub( params, vars, %errors );
+    }
+
+    if (%errors) {
+      status 400;
+      send_as JSON => \%errors;
     }
 };
 
