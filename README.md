@@ -168,9 +168,9 @@ used on Debian and related systems. For usage examples, see the README-Linode.tx
 
 ## Testing the Application
 
-`carton exec prove -lr t/`
+`carton exec prove -lr -It/lib t/`
 
-`carton exec prove -lr t/frontend/*`
+`carton exec prove -lr -It/lib t/frontend/*`
 
 ### Logging errors
 
