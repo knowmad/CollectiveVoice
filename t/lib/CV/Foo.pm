@@ -1,14 +1,14 @@
 package CV::Foo;
 use Dancer2 appname => 'CV';
 
-sub do_something {
-  my $self = shift;
-  my $argv = shift || \@ARGV;
-
-  return 1;
+sub echo {
+  my $arg = shift;
+  return $arg;
 }
 
+
 1;
+
 
 =pod
 

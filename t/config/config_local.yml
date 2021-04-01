@@ -10,7 +10,7 @@ page_description: "Help us. Help others. This is your invitation to review."
 
 feedback:
     module_name: CV::Foo
-    sub_name: do_something
+    sub_name: echo
 
 review_sites:
     -

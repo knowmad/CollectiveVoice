@@ -12,10 +12,9 @@ use CV::Foo;
 my $app = CV->to_app;
 is (ref $app, 'CODE', 'Got the test app');
 
-SKIP: {
-    skip 'Need to fix CV::Foo', 1;
 # Can we run the callback routine?
-my $d = $app->do_something;
-}
+my $e = CV::Foo::echo('test');
+is($e,'test','Callback routine worked as expected');
+
 
 done_testing();
