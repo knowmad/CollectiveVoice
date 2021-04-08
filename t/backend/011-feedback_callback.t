@@ -6,7 +6,7 @@ use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
 
 BEGIN {
-  $ENV{DANCER_CONFDIR}     = 't/config';
+  $ENV{DANCER_CONFDIR}     = 't/config/callback';
   $ENV{DANCER_VIEWS}       = 't/config/views';
 
   # Don't send emails!

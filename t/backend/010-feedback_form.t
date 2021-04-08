@@ -6,8 +6,8 @@ use Test::WWW::Mechanize::PSGI;
 
 BEGIN {
   $ENV{DANCER_CONFDIR}     = 't/config';
-  $ENV{DANCER_ENVDIR}      = 't/config/environments';
-  $ENV{DANCER_ENVIRONMENT} = 'testing-3site';
+  #$ENV{DANCER_ENVDIR}      = 't/config/environments';
+  #$ENV{DANCER_ENVIRONMENT} = 'testing-3site';
   $ENV{DANCER_VIEWS}       = 't/config/views';
 
   # Don't send emails!

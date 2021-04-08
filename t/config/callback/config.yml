@@ -34,6 +34,9 @@ brand_color: "#cccccc"
 page_title: "Leave a Review"
 page_description: "Help us. Help others. This is your invitation to review."
 
+feedback:
+    module_name: CV::Foo
+
 review_sites:
     -
         site: Google

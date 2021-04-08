@@ -4,7 +4,11 @@ use warnings;
 use Dancer2;
 use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
-BEGIN { $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' } # Don't send emails!
+BEGIN {
+  $ENV{DANCER_CONFDIR}     = 't/config';
+  $ENV{DANCER_VIEWS}       = 't/config/views';
+  $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' # Don't send emails!
+}
 
 use CV;
 my $app = CV->to_app;
@@ -26,6 +30,11 @@ $mech->post_ok( '/feedback', {
     });
 
 # Check for an email with feedback details
+# TODO: JAC Help Me!!
+use Data::Dumper;
+print Dumper(config->{'contact_email'});
+print Dumper(config->{'appname'});
+
 my @good_emails = Email::Sender::Simple->default_transport->deliveries;
 my $recipients  = scalar config->{ contact_email }->@*;
 cmp_ok( scalar @good_emails, '==', $recipients,
