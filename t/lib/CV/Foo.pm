@@ -4,11 +4,7 @@ use Dancer2 appname => 'CV';
 use Exporter qw(import);
 our @EXPORT = qw( before_feedback after_feedback );
 
-sub echo {
-  my $arg = shift;
-  return $arg;
-}
-
+# Method imported into the CV namespace and called at beginning of the `post /feedback` route
 sub before_feedback {
   my $vars = @_;
   debug('in before_feedback sub');
@@ -16,8 +12,15 @@ sub before_feedback {
   redirect '/thanks?foo=1';
 }
 
+# Method imported into the CV namespace and called at end of the `post /feedback` route
 sub after_feedback {
   my $vars = @_;
+}
+
+# A test method. Not used in production.
+sub echo {
+  my $arg = shift;
+  return $arg;
 }
 
 
