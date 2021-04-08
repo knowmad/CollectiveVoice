@@ -6,6 +6,7 @@ use Try::Tiny;
 use Email::Simple;
 use Email::Sender::Simple qw( sendmail );
 use Email::Sender::Transport::SMTP;
+use Module::Load;
 
 # Semantic versioning FTW
 our $VERSION = '1.0.5';
@@ -52,10 +53,14 @@ get '/'  => sub {
 };
 
 post '/feedback' => sub {
-    # TODO: Callback to external method, if provided
-    if( my $module = config->{ feedback_module } ) {
-        require_module( $module );
-        my $sub = config->{ before_feedback_sub };
+    # Callback to external method, if provided
+    if( config->{ feedback } ) {
+        my $module = config->{ feedback }->{ module_name };
+        autoload( $module );
+        before_feedback(  );
+        ## TODO: ask JAC about the code above and below; wonder why the example code he shared to dynamically call the $module::$sub didn't work?
+        #my $sub = config->{ feedback }->{ before_feedback_sub };
+        #die( "Module - sub: $module - $sub" );
         #$module::$sub( params, vars );
     }
 
@@ -151,7 +156,7 @@ post '/feedback' => sub {
 
     # TODO: Callback to external method, if provided, with %errors
     if( my $module = config->{ feedback_module } ) {
-        require_module( $module );
+        require( $module );
         my $sub = config->{ after_feedback_sub };
         #$module::$sub( params, vars, %errors );
     }
@@ -175,7 +180,7 @@ get '/thanks' => sub {
     if( session->read( 'feedback_given' ) || params->{'review'} ){
         app->destroy_session;
         render( 'thanks', {
-            title        => 'Collective Voice',
+            meta_title   => 'We Thank You - ' . config->{ company_name },
             company_name => config->{ company_name },
             company_url  => config->{ company_url },
             company_logo => config->{ company_logo },

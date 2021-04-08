@@ -1,0 +1,24 @@
+# These are likely to change based on your specific setup
+# The defaults presented here may likely not be sufficient for other setups.
+export CV_ROOT=$HOME/github/CollectiveVoice
+export PATH=$CV_ROOT/local/bin:$PATH
+export DANCER_ENVIRONMENT=development
+export SS_USER=www-data
+export SS_GROUP=www-data
+export SS_PORT=3000
+export SS_WORKERS=2
+# ^^^ might want to bump that to 10 on a public server
+
+# Deploy variables used by `cvdeploy`
+export CV_DEPLOY_HOST=your.hostname.com
+export CV_DEPLOY_DIR=/path/to/collectivevoice
+export CV_DEPLOY_PORT=3122
+export CV_DEPLOY_USER=dancer
+
+# Paths to files (these need to be re-loaded if you modify CV_ROOT
+#  in shell-env-local)
+export PERL5LIB=$CV_ROOT/lib/:$CV_ROOT/local/lib/perl5:$PERL5LIB
+export SS_LOG_FILE=$CV_ROOT/logs/CollectiveVoice.log
+export SS_PID_FILE=$CV_ROOT/run/CollectiveVoice.pid
+export SS_SOCK_FILE=$CV_ROOT/run/CollectiveVoice.sock
+export SS_STATUS_FILE=$CV_ROOT/run/server_status
