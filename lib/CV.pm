@@ -8,8 +8,15 @@ use Email::Sender::Simple qw( sendmail );
 use Email::Sender::Transport::SMTP;
 use Module::Load;
 
-# Semantic versioning FTW
+# Semantic versioning
 our $VERSION = '1.0.5';
+
+BEGIN {
+  if( config->{ feedback } ) {
+    my $module = config->{ feedback }->{ module_name };
+    autoload( $module );
+  }
+}
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
@@ -54,10 +61,9 @@ get '/'  => sub {
 
 post '/feedback' => sub {
     # Callback to external method, if provided
-    if( config->{ feedback } ) {
-        my $module = config->{ feedback }->{ module_name };
-        autoload( $module );
-        before_feedback(  );
+    #if( config->{ feedback } ) {
+    if( CV->can('before_feedback') ) {
+        before_feedback( body_parameters );
         ## TODO: ask JAC about the code above and below; wonder why the example code he shared to dynamically call the $module::$sub didn't work?
         #my $sub = config->{ feedback }->{ before_feedback_sub };
         #die( "Module - sub: $module - $sub" );
@@ -154,12 +160,15 @@ post '/feedback' => sub {
         };
     }
 
-    # TODO: Callback to external method, if provided, with %errors
-    if( my $module = config->{ feedback_module } ) {
-        require( $module );
-        my $sub = config->{ after_feedback_sub };
-        #$module::$sub( params, vars, %errors );
+    # Callback to external method, if provided, with %errors
+    if( CV->can('after_feedback') ) {
+      after_feedback( body_parameters );
     }
+    #if( my $module = config->{ feedback_module } ) {
+    #    require( $module );
+    #    my $sub = config->{ after_feedback_sub };
+    #    #$module::$sub( params, vars, %errors );
+    #}
 
     if (%errors) {
       status 400;

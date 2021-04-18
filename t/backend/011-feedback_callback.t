@@ -19,7 +19,11 @@ is (ref $app, 'CODE', 'Got the test app');
 die "No `feedback` setup in config file" unless (exists (CV->config->{ feedback }) );
 my $mech = Test::WWW::Mechanize::PSGI->new( app => $app );
 
-# Submit a form and check the status is '200'
+
+##
+## before_feedback test
+##
+# Submit a form by `Test User` that is redirected by CV::Foo and check the status is '200'
 $mech->post_ok( '/feedback', {
         full_name     => 'Test User',
         email_address => 'none@none.com',
@@ -32,11 +36,26 @@ $mech->post_ok( '/feedback', {
 #say $mech->uri;
 
 # Confirm that we are being redirected from CV::Foo
-
 like  ($mech->uri, qr/.*\?foo=1$/, 'URI has `foo=1` appended to the end by before_feedback subroutine');
 
 # Title of returned page is thank you
 $mech->title_like( qr/We Thank You - Acme/ );
+
+
+##
+## after_feedback test
+##
+
+# Submit a form by `Test User` that is redirected by CV::Foo and check the status is '200'
+$mech->post_ok( '/feedback', {
+        full_name     => 'Real User',
+        email_address => 'none@none.com',
+        phone_number  => '8005551212',
+        feedback      => 'You did well, and I should have given you more stars.',
+    });
+# Confirm that we are NOT being redirected from CV::Foo
+unlike  ($mech->uri, qr/.*\?foo=1$/, 'URI does NOT have `foo=1` appended to the end by before_feedback subroutine');
+like  ($mech->uri, qr/.*\?after_foo=1$/, 'URI has `after_foo=1` appended to the end by after_feedback subroutine');
 
 
 done_testing();
