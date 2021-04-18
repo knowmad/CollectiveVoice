@@ -1,5 +1,5 @@
 # Dancer settings
-appname: "CollectiveVoice"
+appname: "CollectiveVoice Test"
 layout: "main"
 charset: "UTF-8"
 

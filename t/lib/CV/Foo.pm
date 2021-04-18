@@ -10,6 +10,11 @@ sub before_feedback {
   debug('in before_feedback sub');
   session 'feedback_given' => 1;
   redirect '/thanks?foo=1';
+  ## TODO: Ask JAC if this is a better approach;
+  ###    pro - less network traffic
+  ###    con - url does not change to /thanks as it would normally
+  #session 'feedback_given' => 1;
+  #forward '/thanks', { foo => 1 }, { method => 'GET' };
 }
 
 # Method imported into the CV namespace and called at end of the `post /feedback` route

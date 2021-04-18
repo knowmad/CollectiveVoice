@@ -1,18 +1,22 @@
 use strict;
 use warnings;
+use Modern::Perl;
 
-use Dancer2;
 use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
+
 BEGIN {
-  $ENV{DANCER_CONFDIR}     = 't/config';
-  $ENV{DANCER_VIEWS}       = 't/config/views';
-  $ENV{EMAIL_SENDER_TRANSPORT} = 'Test' # Don't send emails!
+  $ENV{DANCER_CONFDIR}         = 't/config';
+  #$ENV{DANCER_ENVDIR}          = 't/config';
+  $ENV{DANCER_VIEWS}           = 't/config/views';
+  # Don't send emails!
+  $ENV{EMAIL_SENDER_TRANSPORT} = 'Test';
 }
 
 use CV;
 my $app = CV->to_app;
 is (ref $app, 'CODE', 'Got the test app');
+die "No `contact_email` setup in config file" unless (exists (CV->config->{ contact_email }) );
 
 my $mech = Test::WWW::Mechanize::PSGI->new( app => $app );
 
@@ -30,13 +34,8 @@ $mech->post_ok( '/feedback', {
     });
 
 # Check for an email with feedback details
-# TODO: JAC Help Me!!ern  
-use Data::Dumper;
-print Dumper(config->{'contact_email'});
-print Dumper(config->{'appname'});
-
 my @good_emails = Email::Sender::Simple->default_transport->deliveries;
-my $recipients  = scalar config->{ contact_email }->@*;
+my $recipients  = scalar CV->config->{ contact_email }->@*;
 cmp_ok( scalar @good_emails, '==', $recipients,
     "...and we sent an email to each recipient when a complete form was received."
 );

@@ -10,13 +10,13 @@ BEGIN {
   $ENV{DANCER_VIEWS}       = 't/config/views';
 
   # Don't send emails!
-  $ENV{EMAIL_SENDER_TRANSPORT} = 'Test'
+  $ENV{EMAIL_SENDER_TRANSPORT} = 'Test';
 }
 
 use CV;
 my $app = CV->to_app;
 is (ref $app, 'CODE', 'Got the test app');
-
+die "No `feedback` setup in config file" unless (exists (CV->config->{ feedback }) );
 my $mech = Test::WWW::Mechanize::PSGI->new( app => $app );
 
 # Submit a form and check the status is '200'
