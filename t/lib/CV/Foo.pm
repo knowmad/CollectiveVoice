@@ -12,10 +12,6 @@ sub before_feedback {
   if ($name =~ /^Test User$/) {
     session 'feedback_given' => 1;
     redirect '/thanks?foo=1';
-    ## TODO: Ask JAC if this is a better approach;
-    ###    pro - less network traffic
-    ###    con - url does not change to /thanks as it would normally
-    #forward '/thanks', { foo => 1 }, { method => 'GET' };
   }
 }
 

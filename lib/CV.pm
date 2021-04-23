@@ -61,13 +61,8 @@ get '/'  => sub {
 
 post '/feedback' => sub {
     # Callback to external method, if provided
-    #if( config->{ feedback } ) {
     if( CV->can('before_feedback') ) {
         before_feedback( body_parameters );
-        ## TODO: ask JAC about the code above and below; wonder why the example code he shared to dynamically call the $module::$sub didn't work?
-        #my $sub = config->{ feedback }->{ before_feedback_sub };
-        #die( "Module - sub: $module - $sub" );
-        #$module::$sub( params, vars );
     }
 
     # Trap the bots in an accessible way
@@ -164,11 +159,6 @@ post '/feedback' => sub {
     if( CV->can('after_feedback') ) {
       after_feedback( body_parameters );
     }
-    #if( my $module = config->{ feedback_module } ) {
-    #    require( $module );
-    #    my $sub = config->{ after_feedback_sub };
-    #    #$module::$sub( params, vars, %errors );
-    #}
 
     if (%errors) {
       status 400;
