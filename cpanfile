@@ -61,6 +61,7 @@ requires 'Email::Simple';
 requires 'Authen::SASL';
 requires 'Number::Phone';
 requires 'Number::Phone::NANP';
+requires 'Module::Load';
 
 # Expect this list to get pruned, not sure how some are different than others
 on 'develop' => sub {

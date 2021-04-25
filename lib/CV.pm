@@ -6,9 +6,17 @@ use Try::Tiny;
 use Email::Simple;
 use Email::Sender::Simple qw( sendmail );
 use Email::Sender::Transport::SMTP;
+use Module::Load;
 
-# Semantic versioning FTW
+# Semantic versioning
 our $VERSION = '1.0.5';
+
+BEGIN {
+  if( config->{ feedback } ) {
+    my $module = config->{ feedback }->{ module_name };
+    autoload( $module );
+  }
+}
 
 # Layout MUST be set no later than the before hook!
 hook 'before' => sub {
@@ -52,14 +60,18 @@ get '/'  => sub {
 };
 
 post '/feedback' => sub {
+    # Callback to external method, if provided
+    if( CV->can('before_feedback') ) {
+        before_feedback( body_parameters );
+    }
+
     # Trap the bots in an accessible way
     my $spam_1 = body_parameters->get( 'go' );
     my $spam_2 = body_parameters->get( 'away' );
-
     redirect 'https://en.wikipedia.org/wiki/Three_Laws_of_Robotics'
         if $spam_1 || $spam_2;
 
-    # Ok, we seem to be a real human, so generate some feedback
+    # Ok, we seem to be a real human, so process the feedback
     my %errors;
 
     my $name = body_parameters->get( 'full_name' );
@@ -105,8 +117,6 @@ post '/feedback' => sub {
     if( %errors ) {
         my $error_msg = "Form errors = {" . join(", ", map { "$_ = $errors{$_}" } keys %errors) . "}";
         error $error_msg;
-        status 400;
-        send_as JSON => \%errors;
     } else {
         my $result;
         try {
@@ -136,15 +146,23 @@ post '/feedback' => sub {
                 );
                 sendmail( $email, { transport => $transport });
             }
+            session 'feedback_given' => 1;
         } catch {
-            my $error_msg = "Couldn't send feedback email: " . $_->{ message };
+            my $error_msg = "Couldn't send feedback email: $_";
             error $error_msg;
-            status 400;
             $errors{ err_message }   = $_;
             $errors{ no_email_send } = 1;
-            send_as JSON => \%errors;
         };
-        session 'feedback_given' => 1;
+    }
+
+    # Callback to external method, if provided, with %errors
+    if( CV->can('after_feedback') ) {
+      after_feedback( body_parameters );
+    }
+
+    if (%errors) {
+      status 400;
+      send_as JSON => \%errors;
     }
 };
 
@@ -161,7 +179,7 @@ get '/thanks' => sub {
     if( session->read( 'feedback_given' ) || params->{'review'} ){
         app->destroy_session;
         render( 'thanks', {
-            title        => 'Collective Voice',
+            meta_title   => 'We Thank You - ' . config->{ company_name },
             company_name => config->{ company_name },
             company_url  => config->{ company_url },
             company_logo => config->{ company_logo },
@@ -222,7 +240,7 @@ Collective Voice (CV) - a Dancer2 app to generate online reviews
 
 =head1 VERSION
 
-version 1.0.4
+version 1.0.5
 
 =head1 DESCRIPTION
 

@@ -111,6 +111,7 @@ These files can contain the following settings:
 * logos: review site logos to display (more info below)
 * ratings: labels/descriptions for 1-5 stars
 * sendgrid: Sendgrid credentials for email delivery
+* callback: an external Dancer2 module (e.g., CV::Foo) that can be loaded dynamically and can call pre-defined routines (see more below under Callbacks).
 
 ## Tailwindcss + PurgeCSS
 
@@ -166,11 +167,15 @@ The systemd unit file available in `bin/collectivevoice.service` which can
 used on Debian and related systems. For usage examples, see the README-Linode.txt.
 
 
+## Callbacks
+
+There are ways to extend this application to add customized processing. Currently, this includes a before_feedback and after_feedback callback. See the example code in t/lib/CV/Foo.pm for an example of how to use this functionality.
+
 ## Testing the Application
 
-`carton exec prove -lr t/`
+`carton exec prove -lr -It/lib t/`
 
-`carton exec prove -lr t/frontend/*`
+`carton exec prove -lr -It/lib t/frontend/*`
 
 ### Logging errors
 
