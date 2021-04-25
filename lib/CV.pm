@@ -119,6 +119,7 @@ post '/feedback' => sub {
         error $error_msg;
     } else {
         my $result;
+        my $appname = config->{ appname } || 'CollectiveVoice';
         try {
             my $transport = Email::Sender::Transport::SMTP->new({
                 host          => config->{ mailserver }{ host },
@@ -140,7 +141,7 @@ post '/feedback' => sub {
                     header => [
                         From     => config->{ mailserver }{ from },
                         To       => $recipient,
-                        Subject  => "[CollectiveVoice] You've received new feedback!",
+                        Subject  => "[$appname] You've received new feedback!",
                     ],
                     body   => $text,
                 );
