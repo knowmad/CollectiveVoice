@@ -55,6 +55,7 @@ $mech->post_ok( '/feedback', {
     });
 # Confirm that we are NOT being redirected from CV::Foo
 unlike  ($mech->uri, qr/.*\?foo=1$/, 'URI does NOT have `foo=1` appended to the end by before_feedback subroutine');
+# And that after_feedback was run
 like  ($mech->uri, qr/.*\?after_foo=1$/, 'URI has `after_foo=1` appended to the end by after_feedback subroutine');
 
 
