@@ -1,6 +1,6 @@
 Revision history for CollectiveVoice
 
-1.0.6 mmddyy
+1.1.0 2021-06-13
 
   * Add callback functions at the beginning and end of /feedback route.
   * Enable dynamic subject lines in email notification when feedback given.

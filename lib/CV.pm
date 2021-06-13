@@ -9,7 +9,7 @@ use Email::Sender::Transport::SMTP;
 use Module::Load;
 
 # Semantic versioning
-our $VERSION = '1.0.5';
+our $VERSION = '1.1.0';
 
 BEGIN {
   if( config->{ feedback } ) {
@@ -241,7 +241,7 @@ Collective Voice (CV) - a Dancer2 app to generate online reviews
 
 =head1 VERSION
 
-version 1.0.5
+version 1.1.0
 
 =head1 DESCRIPTION
 
