@@ -1,5 +1,5 @@
 # Dancer settings
-appname: "CollectiveVoice"
+appname: "CollectiveVoice Test"
 layout: "main"
 charset: "UTF-8"
 
@@ -24,3 +24,38 @@ logos:
     google: images/logos/google.png
     facebook: images/logos/facebook.png
     yelp: images/logos/yelp.png
+
+company_name: "Acme Widgets, Inc."
+company_url: "https://www.knowmad.com"
+contact_email:
+    - info@knowmad.com
+company_logo: "images/Acme-corp.png"
+brand_color: "#cccccc"
+page_title: "Leave a Review"
+page_description: "Help us. Help others. This is your invitation to review."
+
+review_sites:
+    -
+        site: Google
+        url: http://search.google.com/local/writereview?placeid=ChIJQ4I-lBygVogRMPJCWKo4POU
+    -
+        site: Facebook
+        url: http://www.facebook.com/110980017714
+    -
+        site: Yelp
+        url: xxx
+    -
+        site: Upcity
+        url: https://upcity.com/local-marketing-agencies/profiles/knowmad#review
+        logo: /images/logos/upcity-logo.png
+
+# Ports can be:
+# 25 - unencrypted
+# 587: TLS
+# 465: SSL
+mailserver:
+    from: "no-reply@yourdomain.com"
+    host: smtp.yourhost.net
+    username: email_username
+    password: foobar
+    port: 587

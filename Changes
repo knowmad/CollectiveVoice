@@ -1,5 +1,11 @@
 Revision history for CollectiveVoice
 
+1.1.0 2021-06-13
+
+  * Add callback functions at the beginning and end of /feedback route.
+  * Enable dynamic subject lines in email notification when feedback given.
+
+
 1.0.5 2021-03-13
 
   * Use brand color for feedback form button

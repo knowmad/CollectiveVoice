@@ -1,12 +1,11 @@
 [% WRAPPER components/section.tt
-    page_title = "Thank You!"
-    page_description = 'Your feedback helps us to improve the quality of our services.'
+    title = "404 Not Found"
+    page_title = "Sorry, we could not find the file you requested."
+    page_description = ''
 %]
 <h1>[% company_name | html_entity %]</h1>
 <div class="mt-1 text-sm leading-5 text-black-500">
-    We sincerely appreciate you taking the time to provide us with feedback regarding your
-    experience with us. We take these reviews very seriously, and use them to determine
-    how better to provide you with products and services that best meet your needs.
+    Resource not found.
 </div><br>
 <div class="text-center pb-4">
   <a href="[% company_url %]"><img class="mx-auto" src="[% company_logo %]" alt="[% company_name %] Logo" title="[% company_name %]"></a>
