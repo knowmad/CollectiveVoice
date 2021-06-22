@@ -9,7 +9,7 @@ use Email::Sender::Transport::SMTP;
 use Module::Load;
 
 # Semantic versioning
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.0';
 
 BEGIN {
   if( config->{ feedback } ) {
@@ -227,6 +227,12 @@ sub render( $template, $args ) {
     }
 }
 
+# Load any config information that's used on every page. No need to set it
+# manually every time.
+hook before_template_render => sub( $tokens ) {
+    $tokens->{ widgets } = config->{ widgets };
+};
+
 true;
 
 __END__
@@ -241,7 +247,7 @@ Collective Voice (CV) - a Dancer2 app to generate online reviews
 
 =head1 VERSION
 
-version 1.1.0
+version 1.2.0
 
 =head1 DESCRIPTION
 
