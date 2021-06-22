@@ -107,9 +107,18 @@ OS: Debian 10
 ## Tips & Trouble-shooting
 
 1. Useful systemd commands
-      1. To restart the service -- `sudo systemctl restart collectivevoice`
-      2. To reset after 'start-limit-hit' -- `systemctl reset-failed collectivevoice.service`
-      3. View failed services -- `sudo systemctl list-units --state failed`
-      4. View logfiles - `sudo journalctl UNIT=collectivevoice.service`
-2. Error "start_server: command not found"
+      1. To get status of a service -- `sudo systemctl status collectivevoice`
+      2. To restart the service -- `sudo systemctl restart collectivevoice`
+      3. To reset after 'start-limit-hit' -- `sudo systemctl reset-failed collectivevoice.service`
+      4. View failed services -- `sudo systemctl list-units --state failed`
+      5. View logfiles - `sudo journalctl UNIT=collectivevoice.service`
+2. Managing Nginx
+      1. Status -- `sudo service nginx status` || `sudo systemctl status nginx`
+      2. Restart nginx -- `sudo systemctl restart nginx`
+      3. View error log -- `sudo less /var/log/nginx/error.log`
+      4. View access log -- `sudo less /var/log/nginx/access.log`
+3. Review your Perl environment & tests
+      1. Re-run `carton install`
+      2. Re-run the test suite to see if it's failing
+3. Error "start_server: command not found"
       1. Add `export PATH=local/bin:$PATH` to your `shell-env-local` file
