@@ -1,0 +1,10 @@
+[% IF widgets.ga3_measurement_id %]
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=[% widgets.ga3_measurement_id %]"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '[% widgets.ga3_measurement_id %]');
+</script>
+[% END %]

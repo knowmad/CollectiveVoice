@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        [% INCLUDE widgets/ga3.tt %]
         <meta charset="[% settings.charset %]">
         <meta content="" name="description" />
         <meta content="" name="author" />

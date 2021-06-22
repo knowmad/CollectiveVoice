@@ -1,5 +1,12 @@
 Revision history for CollectiveVoice
 
+1.2.0 2021-06-22
+
+  * Add support for widgets
+  * Build widget to load the universal Google Analytics code if
+      `widgets.ga3_measurement_id` config is set
+
+
 1.1.0 2021-06-13
 
   * Add callback functions at the beginning and end of /feedback route.
