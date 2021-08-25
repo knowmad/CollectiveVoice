@@ -126,6 +126,9 @@ Setup your environment as follows:
 
 After installing required files, use the following sequence to reduce the size of the CSS library:
 
+TBD - `npx tailwindcss -o public/css/tailwind.css --jit --purge "./*.html"`
+this is the newest way to compress a file in Tailwind v2.2 <https://devdojo.com/tnylea/tailwindcss-22-in-22-seconds>
+
 1. `npm install`
 2. `npm run build:tailwind` (this builds the full tailwindcss file)
 3. `npm run build:css` (updates the file in public/css/tailwind.css)
