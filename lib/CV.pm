@@ -9,7 +9,7 @@ use Email::Sender::Transport::SMTP;
 use Module::Load;
 
 # Semantic versioning
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.1';
 
 BEGIN {
   if( config->{ feedback } ) {
