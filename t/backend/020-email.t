@@ -25,11 +25,13 @@ $mech->post( '/feedback', {} );
 my @bad_emails = Email::Sender::Simple->default_transport->deliveries;
 cmp_ok( scalar @bad_emails, '==', 0, "No emails were sent for an incomplete form. Good news." );
 
-# Do we get 200 OK on success?
+# Do we get 200 OK when a bad phone number is entered?
 $mech->post_ok( '/feedback', {
         full_name     => 'Test User',
         email_address => 'none@none.com',
-        phone_number  => '8005551212',
+        #phone_number  => '8005551212',
+        #phone_number  => '800-772-1213',
+        phone_number  => '3332223232',
         feedback      => 'You did well, and I should have given you more stars.',
     });
 
@@ -37,6 +39,22 @@ $mech->post_ok( '/feedback', {
 my @good_emails = Email::Sender::Simple->default_transport->deliveries;
 my $recipients  = scalar CV->config->{ contact_email }->@*;
 cmp_ok( scalar @good_emails, '==', $recipients,
+    "...and we sent an email to each recipient when a complete form was received."
+);
+
+# Do we get 200 OK when a good phone number is entered?
+$mech->post_ok( '/feedback', {
+        full_name     => 'Test User',
+        email_address => 'none@none.com',
+        phone_number  => '800-772-1213',
+        feedback      => 'The IRS is calling.',
+    });
+# Check for an email with feedback details
+my @good_emails2 = Email::Sender::Simple->default_transport->deliveries;
+#diag(explain(@good_emails2));
+# allow for the first send
+my $recipients  = (scalar CV->config->{ contact_email }->@*) + (scalar CV->config->{ contact_email }->@*);
+cmp_ok( scalar @good_emails2, '==', $recipients,
     "...and we sent an email to each recipient when a complete form was received."
 );
 
