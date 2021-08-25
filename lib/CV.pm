@@ -15,6 +15,7 @@ BEGIN {
   if( config->{ feedback } ) {
     my $module = config->{ feedback }->{ module_name };
     autoload( $module );
+    try { $module->init };
   }
 }
 
