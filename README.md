@@ -195,7 +195,7 @@ Max dimensions for client logos are 1200px x 300px (width x height).
 
 ### Resize Logos with GraphicsMagick
 
-`gm convert -size 1200x300 CORP-logo.png CORP-logo-resized.png`
+`gm convert -resize 1200x300 CORP-logo.png CORP-logo-resized.png`
 
 
 ## Review Site Logos
