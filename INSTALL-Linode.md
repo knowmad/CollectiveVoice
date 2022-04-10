@@ -120,5 +120,5 @@ OS: Debian 10
 3. Review your Perl environment & tests
       1. Re-run `carton install`
       2. Re-run the test suite to see if it's failing
-3. Error "start_server: command not found"
+4. Error "start_server: command not found"
       1. Add `export PATH=local/bin:$PATH` to your `shell-env-local` file
