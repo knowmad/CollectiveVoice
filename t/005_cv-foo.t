@@ -29,6 +29,7 @@ is (ref $app, 'CODE', 'Got the test app');
 my $e = CV::Foo::echo('test');
 is($e,'test','Callback `echo` routine worked as expected');
 
+CV::Foo::init;
 
 # TODO: JAC - is there a way to do this???
 SKIP: {

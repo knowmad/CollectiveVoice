@@ -4,6 +4,10 @@ use Dancer2 appname => 'CV';
 use Exporter qw(import);
 our @EXPORT = qw( before_feedback after_feedback );
 
+# Inject global settings into config
+sub init {
+}
+
 # Method imported into the CV namespace and called at beginning of the `post /feedback` route
 sub before_feedback {
   my ($params) = @_;

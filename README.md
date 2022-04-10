@@ -188,7 +188,9 @@ messages to the selected logging library:
 
 ## Client Logos
 
-Max dimensions for client logos are 400px x 300px (width x height).
+Optimal dimensions for square client logos are 400px x 300px (width x height).
+
+For horizontal logos, you can go as wide as 600px and may want to add white background to top and bottom to optimize the fit.
 
 
 ## Review Site Logos

@@ -835,14 +835,6 @@ DISTRIBUTIONS
       Time::Local 0
       strict 0
       warnings 0
-  Email-SendGrid-V3-v0.900.1
-    pathname: G/GS/GSG/Email-SendGrid-V3-v0.900.1.tar.gz
-    provides:
-      Email::SendGrid::V3 v0.900.1
-    requirements:
-      ExtUtils::MakeMaker 7.1101
-      JSON 0
-      namespace::clean 0
   Email-Sender-1.300035
     pathname: R/RJ/RJBS/Email-Sender-1.300035.tar.gz
     provides:
@@ -1391,14 +1383,6 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
-  JSON-4.02
-    pathname: I/IS/ISHIGAKI/JSON-4.02.tar.gz
-    provides:
-      JSON 4.02
-      JSON::Backend::PP 4.02
-    requirements:
-      ExtUtils::MakeMaker 0
-      Test::More 0
   JSON-MaybeXS-1.004000
     pathname: H/HA/HAARG/JSON-MaybeXS-1.004000.tar.gz
     provides:
@@ -2070,12 +2054,6 @@ DISTRIBUTIONS
       Scalar::Util 1.48
       Test::More 0.96
       Test::utf8 0
-  Number-Phone-US-1.5
-    pathname: K/KE/KENNEDYH/Number-Phone-US-1.5.tar.gz
-    provides:
-      Number::Phone::US 1.5
-    requirements:
-      ExtUtils::MakeMaker 0
   POSIX-strftime-Compiler-0.42
     pathname: K/KA/KAZEBURO/POSIX-strftime-Compiler-0.42.tar.gz
     provides:
