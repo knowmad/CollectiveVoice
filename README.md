@@ -192,6 +192,12 @@ Optimal dimensions for square client logos are 400px x 300px (width x height).
 
 For horizontal logos, you can go as wide as 600px and may want to add white background to top and bottom to optimize the fit.
 
+Max dimensions for client logos are 1200px x 300px (width x height).
+
+### Resize Logos with GraphicsMagick
+
+`gm convert -size 1200x300 CORP-logo.png CORP-logo-resized.png`
+
 
 ## Review Site Logos
 

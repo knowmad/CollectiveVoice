@@ -102,7 +102,13 @@ post '/feedback' => sub {
             $errors{ bad_phone } = 'Please enter a valid US phone number.';
         }
         else {
-          $phone_number = $phone->format_for_country('NANP');
+            try {
+                $phone_number = $phone->format_for_country('NANP');
+            }
+            catch {
+                error "Error trying to format phone: $_. Falling back to what user entered.";
+                $phone_number = body_parameters->get( 'phone_number' );
+            }
         }
     } else {
         # Leave the number as-entered
