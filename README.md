@@ -54,8 +54,17 @@ Here's my Mac OS recommendations:
   1. `cpanm Carton`
   2. `plenv rehash`
 
-3. Install `ExtUtils::MakeMaker` from homebrew
+3. Install Plack `cpanm Plack`
 
+4. Install `ExtUtils::MakeMaker` from homebrew
+or `sudo apt install libextutils-makemaker-cpanfile-perl` (ubuntu)  
+
+5. Install Modern::Perl (`sudo apt install libmodern-perl-perl`)
+or `cpanm Modern::Perl`
+
+6. Yaml-linting (`sudo apt install yamllint`)
+
+7. Ansible & ansible lint (`sudo apt install ansible ansible-lint`)
 
 ## Setting Up the Application
 
@@ -195,7 +204,7 @@ Max dimensions for client logos are 1200px x 300px (width x height).
 
 ### Resize Logos with GraphicsMagick
 
-`gm convert -resize 1200x300 CORP-logo.png CORP-logo-resized.png`
+`gm convert -size 1200x300 CORP-logo.png CORP-logo-resized.png`
 
 
 ## Review Site Logos
