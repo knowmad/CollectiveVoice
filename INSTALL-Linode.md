@@ -2,6 +2,15 @@
 Updated: December 28, 2020
 OS: Debian 10
 
+# General Guidelines
+
+Build it in layers:
+1. Base OS first
+2. then perl/plenv/carton
+3. add nginx with reverse proxy. Test on http
+4. add in letsencrypt
+5. firewall it at the end
+
 
 ## Step 1: Setup your account
 (see also https://www.linode.com/docs/getting-started/)
