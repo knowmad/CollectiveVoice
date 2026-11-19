@@ -1,6 +1,6 @@
 # These are likely to change based on your specific setup
 # The defaults presented here may likely not be sufficient for other setups.
-export CV_ROOT=$HOME/github/CollectiveVoice
+export CV_ROOT=$HOME/cltpm/CollectiveVoice
 export PATH=$CV_ROOT/local/bin:$PATH
 export DANCER_ENVIRONMENT=development
 export SS_USER=www-data
